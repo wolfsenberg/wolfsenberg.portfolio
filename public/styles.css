@@ -160,6 +160,115 @@ body {
   padding: 8px;
 }
 
+.win-progress {
+  width: 100%;
+  height: 18px;
+  margin-top: 8px;
+  padding: 2px;
+  background: var(--win-white);
+  border: 2px solid;
+  border-color: var(--win-3d-dark) var(--win-3d-light) var(--win-3d-light) var(--win-3d-dark);
+  overflow: hidden;
+}
+
+.win-progress-bar {
+  display: block;
+  height: 100%;
+  min-width: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--win-blue) 0,
+    var(--win-blue) 10px,
+    transparent 10px,
+    transparent 14px
+  );
+}
+
+.win-progress--determinate .win-progress-bar {
+  width: 100%;
+  transform-origin: left center;
+  animation: win-progress-fill 2s steps(16, end) forwards;
+}
+
+.win-progress--indeterminate .win-progress-bar {
+  width: 68%;
+  animation: win-progress-slide 0.9s steps(8, end) infinite;
+}
+
+.win-image-frame {
+  position: relative;
+  min-height: 160px;
+  background: var(--win-white);
+  overflow: hidden;
+}
+
+.win-image-frame > img {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.12s linear;
+}
+
+.win-image-frame.is-loaded > img {
+  opacity: 1;
+}
+
+.win-image-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--win-gray);
+  color: var(--win-black);
+  font-family: 'Reddit Mono', monospace;
+}
+
+.win-image-loader-window {
+  width: min(260px, 100%);
+  background: var(--win-gray);
+  border: 2px solid;
+  border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light);
+  box-shadow: 1px 1px 0 var(--win-black);
+}
+
+.win-image-loader-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  background: var(--win-blue);
+  color: var(--win-white);
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.win-image-loader-body {
+  padding: 12px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.win-image-loader-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  image-rendering: pixelated;
+  vertical-align: -2px;
+}
+
+.win-image-frame.is-loaded .win-image-loader {
+  display: none;
+}
+
+.win-image-frame.is-error .win-image-loader-body::after {
+  content: "Image failed to load.";
+  display: block;
+  margin-top: 6px;
+  color: #800000;
+}
+
 /* Outset Panel */
 .win-outset {
   background: var(--win-gray);
@@ -332,6 +441,16 @@ body {
   to   { transform: translateX(-100%); }
 }
 
+@keyframes win-progress-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes win-progress-slide {
+  from { transform: translateX(-28px); }
+  to { transform: translateX(70px); }
+}
+
 /* Modal specific styles */
 .modal-overlay {
   position: fixed;
@@ -462,16 +581,27 @@ body {
     align-items: center !important;
     justify-content: center !important;
     min-width: unset !important;
+    position: relative !important;
+    touch-action: manipulation !important;
+  }
+  #modal-prev::before,
+  #modal-next::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: -17px !important;
+    background: transparent !important;
   }
   #modal-prev::after {
     content: "<" !important;
     font-size: 8px !important;
     font-weight: bold !important;
+    position: relative !important;
   }
   #modal-next::after {
     content: ">" !important;
     font-size: 8px !important;
     font-weight: bold !important;
+    position: relative !important;
   }
   #modal-image-count {
     display: none !important;

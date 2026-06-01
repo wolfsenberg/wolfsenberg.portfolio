@@ -17,14 +17,13 @@
   
   <!-- Preloader -->
   <div id="preloader" style="position: fixed; inset: 0; z-index: 10000; background: var(--win-teal); display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease;">
-    <div style="background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); padding: 20px; text-align: center; font-family: monospace; font-size: 14px;">
+    <div style="width: min(260px, calc(100vw - 32px)); background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); padding: 20px; text-align: center; font-family: monospace; font-size: 14px;">
       <div style="margin-bottom: 10px; font-weight: bold;">Loading Portfolio...</div>
-      <div style="width: 200px; height: 16px; background: var(--win-white); border: 1px solid var(--win-3d-dark); margin: 0 auto; position: relative;">
-        <div style="width: 100%; height: 100%; background: var(--win-blue); animation: load 2s linear forwards;"></div>
+      <div class="win-progress win-progress--determinate" aria-hidden="true">
+        <span class="win-progress-bar"></span>
       </div>
     </div>
   </div>
-  <style>@keyframes load { from { width: 0%; } to { width: 100%; } }</style>
 
   <!-- Desktop Icons (Navbar) -->
   <div id="desktop-icons" style="position: fixed; top: 24px; left: 8px; z-index: 100; display: flex; flex-direction: column; gap: 6px; max-height: calc(100vh - 60px); overflow-y: auto; overflow-x: hidden; padding: 4px; width: 80px;">
@@ -186,7 +185,7 @@
           <div style="padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--win-gray-light);">
             <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 12px;">
               <div style="width: 80px; height: 80px; flex-shrink: 0; border: 2px solid; border-color: var(--win-3d-dark) var(--win-3d-light) var(--win-3d-light) var(--win-3d-dark); overflow: hidden; background: var(--win-white);">
-                <img src="__ASSET_BASE_URL__/profile-frames/frame-000.webp" alt="Geinel Niño A. Dungao" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'" />
+                <img src="__ASSET_BASE_URL__/profile-frames/frame-000.webp" alt="Geinel Niño A. Dungao" width="80" height="80" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'" />
               </div>
               <div>
                 <h1 style="font-size: 22px; font-weight: bold; color: var(--win-blue); margin-bottom: 6px; line-height: 1.2;">
@@ -337,7 +336,23 @@
           
           <!-- Graphic Tab Content -->
           <div id="content-graphic" style="display: none; padding: 16px;">
-            <img src="/assets/gallery/photo-portfolio.png" alt="Graphic Design Portfolio" style="width: 100%; height: auto;" onerror="this.style.display='none'" />
+            <div class="win-image-frame" data-win-image-frame style="width: 100%;">
+              <img data-win-loader src="__ASSET_BASE_URL__/gallery/photo-portfolio.webp" alt="Graphic Design Portfolio" width="1571" height="2403" loading="lazy" decoding="async" style="width: 100%; height: auto;" onerror="this.style.display='none'" />
+              <div class="win-image-loader" role="status" aria-live="polite">
+                <div class="win-image-loader-window">
+                  <div class="win-image-loader-titlebar">
+                    <span>Loading Image</span>
+                    <span>?</span>
+                  </div>
+                  <div class="win-image-loader-body">
+                    Please wait...
+                    <div class="win-progress win-progress--indeterminate" aria-hidden="true">
+                      <span class="win-progress-bar"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div style="font-size: 12px; font-style: italic; color: var(--win-gray-dark); margin-top: 10px;"></div>
           </div>
         </div>
@@ -681,8 +696,22 @@
         </div>
         <div id="modal-images-container" style="margin-bottom: 16px; display: none;">
           <div style="font-size: 11px; font-weight: bold; margin-bottom: 8px;">Screenshots:</div>
-          <div class="win-inset" style="position: relative; aspect-ratio: 16/9; background: var(--win-black); padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-            <img id="modal-image" src="" alt="" style="width: 100%; height: 100%; object-fit: contain;" />
+          <div class="win-inset win-image-frame" data-win-image-frame style="position: relative; aspect-ratio: 16/9; background: var(--win-black); padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img id="modal-image" data-win-loader src="" alt="" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain;" />
+            <div class="win-image-loader" role="status" aria-live="polite">
+              <div class="win-image-loader-window">
+                <div class="win-image-loader-titlebar">
+                  <span>Loading Image</span>
+                  <span>?</span>
+                </div>
+                <div class="win-image-loader-body">
+                  Please wait...
+                  <div class="win-progress win-progress--indeterminate" aria-hidden="true">
+                    <span class="win-progress-bar"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div id="modal-image-controls" style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px;">
               <button id="modal-prev" class="win-button" style="padding: 4px 12px; font-size: 11px;">&lt; Prev</button>
               <div id="modal-image-count" style="background: var(--win-gray); padding: 4px 12px; font-size: 11px; border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light);">1 / 1</div>

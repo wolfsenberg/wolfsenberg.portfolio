@@ -138,6 +138,7 @@ app.get("/assets/*", async (req, res, next) => {
 
   try {
     await access(localAssetPath);
+    res.setHeader("Cache-Control", "public, max-age=86400");
     res.sendFile(localAssetPath);
     return;
   } catch {

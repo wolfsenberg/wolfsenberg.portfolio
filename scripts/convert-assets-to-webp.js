@@ -4,6 +4,8 @@ import sharp from "sharp";
 
 const root = path.resolve("public", "assets");
 const skipDirs = new Set(["favicons"]);
+const maxWidth = 1600;
+const quality = 78;
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -33,7 +35,13 @@ let webpBytes = 0;
 for (const file of files) {
   const output = file.replace(/\.png$/i, ".webp");
   const before = await stat(file);
-  await sharp(file).webp({ quality: 82, effort: 6 }).toFile(output);
+  await sharp(file)
+    .resize({
+      width: maxWidth,
+      withoutEnlargement: true
+    })
+    .webp({ quality, effort: 6 })
+    .toFile(output);
   const after = await stat(output);
   await unlink(file);
 
