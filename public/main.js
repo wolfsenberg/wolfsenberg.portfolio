@@ -1,409 +1,1122 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Clock update
-  const timeEl = document.getElementById('clock-time');
-  const dateEl = document.getElementById('clock-date');
+document.addEventListener("DOMContentLoaded", () => {
+  const base = window.ASSET_BASE || "/assets";
 
-  function updateClock() {
-    const now = new Date();
-    const h = now.getHours() % 12 || 12;
-    const m = String(now.getMinutes()).padStart(2, "0");
-    const ampm = now.getHours() >= 12 ? "PM" : "AM";
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    if (timeEl) timeEl.textContent = `${h}:${m} ${ampm}`;
-    if (dateEl) dateEl.textContent = `${days[now.getDay()]} ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
-  }
-
-  updateClock();
-  setInterval(updateClock, 1000);
-
-  // Start Menu
-  const startBtn = document.getElementById('start-button');
-  const startMenu = document.getElementById('start-menu');
-  const startMenuOverlay = document.getElementById('start-menu-overlay');
-
-  function toggleStartMenu() {
-    const isActive = startMenu.classList.contains('active');
-    if (isActive) {
-      startMenu.classList.remove('active');
-      startMenuOverlay.classList.remove('active');
-      startBtn.classList.remove('active');
-    } else {
-      startMenu.classList.add('active');
-      startMenuOverlay.classList.add('active');
-      startBtn.classList.add('active');
-      
-      // Auto-collapse Ask Geinel chat when opening Start
-      if (typeof chatWindow !== 'undefined' && chatWindow && chatWindow.style.display === 'flex') {
-        chatWindow.style.display = 'none';
-        if (typeof chatTabArrow !== 'undefined' && chatTabArrow) chatTabArrow.textContent = '▲';
-      }
+  const projectsData = {
+    sentinel: {
+      title: "SENTINEL: A Web-Based RFID Door Lock Access Control System for Comfac Global Group",
+      shortTitle: "SENTINEL",
+      year: "2026",
+      discipline: "IoT / Web / Access Control",
+      tech: ["Arduino", "C++", "MQTT", "Next.js", "PHP", "Blade"],
+      type: "Project",
+      featured: true,
+      fullDescription: "RFID door-lock platform for Comfac Global Group. Smart door hardware, real-time monitoring, attendance tracking, and centralized security management.",
+      images: [
+        { src: "./projects/sentinel/SENTINEL1.webp", alt: "SENTINEL RFID door lock access control dashboard" },
+        { src: "./projects/sentinel/SENTINEL2.webp", alt: "SENTINEL real-time monitoring interface" },
+        { src: "./projects/sentinel/SENTINEL3.webp", alt: "SENTINEL attendance tracking screen" },
+        { src: "./projects/sentinel/SENTINEL4.webp", alt: "SENTINEL centralized security management screen" }
+      ]
+    },
+    salomed: {
+      title: "SaloMed",
+      shortTitle: "SaloMed",
+      year: "2026",
+      discipline: "Blockchain / Healthcare / Fintech",
+      tech: ["Next.js", "TypeScript", "Python", "Rust", "PostgreSQL"],
+      type: "Project",
+      featured: true,
+      fullDescription: "Healthcare savings and remittance platform for families and OFWs. Funds can be reserved, sent, and tracked for verified medical expenses.",
+      proofBadge: "Presented at Rise In APAC Stellar Hackathon",
+      images: [
+        { src: "./projects/salomed/SALOMED1.webp", alt: "SaloMed healthcare savings platform interface" },
+        { src: "./projects/salomed/SALOMED2.webp", alt: "SaloMed healthcare remittance workflow screen" }
+      ]
+    },
+    "aws-build-over-nights": {
+      title: "AWS Build Over Nights: Kiro x Quick Hackathon Website",
+      shortTitle: "AWS Build Over Nights",
+      year: "2026",
+      discipline: "Event Platform / AWS Community",
+      tech: ["TypeScript", "HTML", "CSS", "JavaScript"],
+      type: "Project",
+      featured: true,
+      fullDescription: "Official website for AWS Build Over Nights: Kiro x Quick Hackathon. Event details, registration, schedules, sponsors, and participant resources in one place.",
+      images: [{ src: "./projects/build_over.webp", alt: "AWS Build Over Nights Kiro x Quick Hackathon website" }]
+    },
+    "packet-capture": {
+      title: "Packet Capture: CTF Platform",
+      shortTitle: "Packet Capture",
+      year: "2026",
+      discipline: "Cybersecurity / Packet Analysis",
+      tech: ["Next.js", "TypeScript", "CSS", "Python", "PostgreSQL"],
+      type: "Project",
+      featured: true,
+      fullDescription: "Cybersecurity Capture the Flag platform developed in partnership with Macquarie University, Sydney, Australia. Built for packet-analysis challenges, participant access, scoring, and competition workflows.",
+      proofBadge: "I lead this project",
+      note: "Developed in partnership with Macquarie University, Sydney, Australia.",
+      images: [
+        { src: "./projects/ctf/CTF1.webp", alt: "Packet Capture CTF platform screen" },
+        { src: "./projects/ctf/CTF2.webp", alt: "Packet Capture CTF challenge interface" },
+        { src: "./projects/ctf/CTF3.webp", alt: "Packet Capture CTF participant workflow" },
+        { src: "./projects/ctf/CTF4.webp", alt: "Packet Capture CTF platform detail" }
+      ]
+    },
+    "project-zero": {
+      title: "Project Zero",
+      shortTitle: "Project Zero",
+      year: "2025",
+      discipline: "Job Platform / Web",
+      tech: ["PHP", "Laravel", "Tailwind CSS", "SQL"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Job-listing site for IT professionals moving from entry-level roles toward better opportunities.",
+      images: [{ src: "./projects/PROJECT ZERO.webp", alt: "Project Zero dashboard" }]
+    },
+    "rfid-report-card": {
+      title: "Arduino-Based RFID System as an Efficient Tracker of the Students' Report Card",
+      shortTitle: "RFID Report Card",
+      year: "2023",
+      discipline: "RFID / Arduino / SMS",
+      tech: ["Arduino", "C++", "RFID", "GSM Module"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Arduino-based RFID report-card tracker. Tap a card, show grades on an LCD, then send updates through a GSM module.",
+      proofBadge: "I lead this project",
+      images: [{ src: "./projects/RFID_GRADE.webp", alt: "RFID grade system" }]
+    },
+    "rfid-passport": {
+      title: "Arduino-Based RFID Technology as an Efficient Way of Passport Verification",
+      shortTitle: "RFID Passport Verification",
+      year: "2019",
+      discipline: "RFID / Verification Prototype",
+      tech: ["Arduino", "C++", "RFID"],
+      type: "Project",
+      featured: false,
+      fullDescription: "RFID passport-verification prototype that displays passenger information after a passport tap.",
+      proofBadge: "I lead this project",
+      images: [{ src: "./projects/RFID_PASSPORT.webp", alt: "RFID passport verification prototype" }]
+    },
+    "project-yu": {
+      title: "Project Yú",
+      shortTitle: "Project Yú",
+      year: "2019",
+      discipline: "Robotics / Arduino",
+      tech: ["Arduino", "C++", "Robotics"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Arduino-based robot concept for helping fishermen identify areas with higher fish abundance.",
+      proofBadge: "Presented at Division Science and Technology Fair 2019 - Science Innovation Expo",
+      images: [{ src: "./projects/PROJECT_YU.webp", alt: "Project Yú Arduino robot prototype" }]
+    },
+    "project-talakinesis": {
+      title: "Project Talakinesis",
+      shortTitle: "Project Talakinesis",
+      year: "2019",
+      discipline: "Arduino / Energy Efficiency",
+      tech: ["Arduino", "C++", "PIR Motion Sensor"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Arduino-based motion-activated light source for more efficient energy use.",
+      proofBadge: "Presented at 1st Filipino Ideas Expo (2019)",
+      images: [{ src: "./projects/TALAKINESIS.webp", alt: "Project Talakinesis Arduino motion-activated light prototype" }]
+    },
+    atimonan: {
+      title: "Municipal Website of Atimonan, Quezon",
+      shortTitle: "Atimonan Municipal Website",
+      year: "2025",
+      discipline: "Civic Portal / Web",
+      tech: ["HTML", "CSS", "JavaScript", "Google Apps Script", "Firebase"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Municipal web portal for Atimonan, Quezon. Services, news, announcements, emergency contacts, and community updates.",
+      proofBadge: "I lead this project",
+      images: [
+        { src: "./projects/atimonan/ATIMONAN_LOGIN.webp", alt: "Atimonan website login page" },
+        { src: "./projects/atimonan/ATIMONAN_HOME.webp", alt: "Atimonan website home page" },
+        { src: "./projects/atimonan/ATIMONAN_SERVICES.webp", alt: "Atimonan website services page" },
+        { src: "./projects/atimonan/ATIMONAN_NEWS.webp", alt: "Atimonan website news page" },
+        { src: "./projects/atimonan/ATIMONAN_ABOUT.webp", alt: "Atimonan website about page" },
+        { src: "./projects/atimonan/ATIMONAN_CONTACT.webp", alt: "Atimonan website contact page" }
+      ]
+    },
+    surroundsense: {
+      title: "SurroundSense",
+      shortTitle: "SurroundSense",
+      year: "2025",
+      discipline: "LiDAR / IoT / Visualization",
+      tech: ["Arduino", "C++", "Python", "LiDAR", "Data Visualization"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Arduino-Python LiDAR application for real-time mapping, object detection, and live sensor visualization.",
+      images: [
+        { src: "./projects/surroundsense/SURROUNDSENSE_WELCOME.webp", alt: "SurroundSense welcome screen" },
+        { src: "./projects/surroundsense/SURROUNDSENSE2D.webp", alt: "SurroundSense 2D mapping" },
+        { src: "./projects/surroundsense/SURROUNDSENSE_TEST.webp", alt: "SurroundSense testing" },
+        { src: "./projects/surroundsense/SURROUNDSENSE3D.webp", alt: "SurroundSense 3D mapping" }
+      ]
+    },
+    tedxpup: {
+      title: "TEDxPUP Official Website",
+      shortTitle: "TEDxPUP Official Website",
+      year: "2026",
+      discipline: "Event Website / Web",
+      tech: ["React.js", "TypeScript", "Typeform"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Official website for TEDx events organized by PUP students. Event information and public-facing updates, kept clear.",
+      proofBadge: "I managed this project",
+      images: [{ src: "./projects/TEDXPUP.webp", alt: "TEDxPUP Official Website" }]
+    },
+    "photo-editing-projects": {
+      title: "Photo Editing Projects",
+      shortTitle: "Photo Editing",
+      year: "",
+      discipline: "Creative Multimedia / Photo Editing",
+      tech: ["Photo Editing", "Creative Direction", "Visual Design", "Social Media"],
+      type: "Project",
+      featured: false,
+      fullDescription: "A selected photo-editing portfolio showing visual work for events, communities, and personal creative projects. Color, layout, retouching, and social-ready edits in one archive.",
+      images: [{ src: "./gallery/photo-portfolio.webp", alt: "Photo editing project portfolio collage" }]
+    },
+    lingap: {
+      title: "Ledger for Integrity, Need-based Giving, Aid Provenance, and Protection (LINGAP)",
+      shortTitle: "LINGAP",
+      year: "2026",
+      discipline: "Aid Platform / Records Management",
+      tech: ["TypeScript", "Python", "HTML", "CSS", "Rust", "PostgreSQL"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Digital platform for community assistance and support services. Records, requests, and workflows, less scattered.",
+      proofBadge: "Presented at Build on Stellar Philippines Hackathon 2026",
+      images: [
+        { src: "./projects/lingap/LINGAP1.webp", alt: "LINGAP aid governance platform interface" },
+        { src: "./projects/lingap/LINGAP2.webp", alt: "LINGAP community assistance workflow screen" },
+        { src: "./projects/lingap/LINGAP3.webp", alt: "LINGAP aid tracking and protection dashboard" },
+        { src: "./projects/lingap/LINGAP4.webp", alt: "LINGAP platform detail screen" }
+      ]
+    },
+    "gdg-pup-nexus": {
+      title: "GDG PUP Nexus",
+      shortTitle: "GDG PUP Nexus",
+      year: "2026",
+      discipline: "Community Platform / Events",
+      tech: ["TypeScript", "JavaScript", "PLpgSQL", "CSS", "HCL"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Central platform for GDG PUP: community updates, events, resources, and member experiences in one place.",
+      proofBadge: "I QA'd this project",
+      images: [
+        { src: "./projects/gdg/gdg1.webp", alt: "GDG PUP Nexus platform screen" },
+        { src: "./projects/gdg/gdg2.webp", alt: "GDG PUP Nexus community page" },
+        { src: "./projects/gdg/gdg3.webp", alt: "GDG PUP Nexus events page" },
+        { src: "./projects/gdg/gdg4.webp", alt: "GDG PUP Nexus resources page" },
+        { src: "./projects/gdg/gdg5.webp", alt: "GDG PUP Nexus member experience page" }
+      ]
+    },
+    "awscc-pup-website": {
+      title: "AWS Cloud Club PUP Official Website",
+      shortTitle: "AWS Cloud Club PUP Website",
+      year: "2026",
+      discipline: "Cloud Community / Web",
+      tech: ["TypeScript", "Astro", "Python", "CSS"],
+      type: "Project",
+      featured: false,
+      fullDescription: "Online home for AWS Cloud Club PUP Manila: activities, events, projects, and team information.",
+      images: [{ src: "./projects/AWSPUP.webp", alt: "AWS Cloud Club PUP Official Website" }]
     }
-  }
-
-  if (startBtn) startBtn.addEventListener('click', toggleStartMenu);
-  if (startMenuOverlay) startMenuOverlay.addEventListener('click', toggleStartMenu);
-
-  // Close start menu when clicking a link
-  const startLinks = document.querySelectorAll('.start-menu-link');
-  startLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      startMenu.classList.remove('active');
-      startMenuOverlay.classList.remove('active');
-      startBtn.classList.remove('active');
-    });
-  });
-
-  // Projects Tabs
-  const tabTech = document.getElementById('tab-technical');
-  const tabGraph = document.getElementById('tab-graphic');
-  const contentTech = document.getElementById('content-technical');
-  const contentGraph = document.getElementById('content-graphic');
-  const statusTab = document.getElementById('status-tab-info');
-
-  if (tabTech && tabGraph) {
-    tabTech.addEventListener('click', () => {
-      tabTech.style.background = 'var(--win-gray)';
-      tabTech.style.top = '2px';
-      tabTech.style.zIndex = '1';
-      tabTech.style.borderColor = 'var(--win-3d-light) var(--win-3d-dark) var(--win-gray) var(--win-3d-light)';
-
-      tabGraph.style.background = 'var(--win-gray-light)';
-      tabGraph.style.top = '0px';
-      tabGraph.style.zIndex = '0';
-      tabGraph.style.borderColor = 'var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light)';
-
-      contentTech.style.display = 'grid';
-      contentGraph.style.display = 'none';
-      statusTab.textContent = '12 projects — click any folder to view details';
-    });
-
-    tabGraph.addEventListener('click', () => {
-      tabGraph.style.background = 'var(--win-gray)';
-      tabGraph.style.top = '2px';
-      tabGraph.style.zIndex = '1';
-      tabGraph.style.borderColor = 'var(--win-3d-light) var(--win-3d-dark) var(--win-gray) var(--win-3d-light)';
-
-      tabTech.style.background = 'var(--win-gray-light)';
-      tabTech.style.top = '0px';
-      tabTech.style.zIndex = '0';
-      tabTech.style.borderColor = 'var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light)';
-
-      contentGraph.style.display = 'block';
-      contentTech.style.display = 'none';
-      statusTab.textContent = 'Graphic Design Portfolio';
-    });
-  }
-
-  // Fade-in animation on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('fade-in');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.win-window.fade-in').forEach(el => {
-    observer.observe(el);
-  });
-
-  // Project Data
-  window.projectsData = {
-    "tedxpup": { "title": "TEDxPUP Official Website", "year": "2026", "tech": ["React.js", "TypeScript", "Typeform"], "type": "Team Project", "fullDescription": "The TEDxPUP Official Website is the central online platform for TEDx events organized by students of the Polytechnic University of the Philippines. It serves as the go-to destination for event information, speaker profiles, and updates for the PUP community and beyond.", "images": [{ "src": "./projects/TEDXPUP.webp", "alt": "TEDxPUP Official Website" }] },
-    "awscc-pup-website": { "title": "AWS Cloud Club PUP Official Website", "year": "2026", "tech": ["TypeScript", "Astro", "Python", "CSS"], "type": "Team Project", "fullDescription": "The AWS Cloud Club PUP Official Website is an all-in-one online platform for AWS Cloud Club PUP Manila. It provides members and visitors with information about the club's activities, events, projects, and team, serving as the digital home of the organization.", "images": [{ "src": "./projects/AWSPUP.webp", "alt": "AWS Cloud Club PUP Official Website" }] },
-    "surroundsense": { "title": "SurroundSense", "year": "2025", "tech": ["Arduino", "C++", "Python"], "type": "Solo Project", "fullDescription": "SurroundSense is a real-time scanning app that maps nearby surroundings using the TF Mini-S LiDAR and MPU6050 gyro sensor. Acting like a digital pen, the system collects distance and orientation data as you move the device, plotting a map of the environment. You can view the result not just in a 2D radar-style map but also in a 3D wireframe style for a more detailed look. Arduino (C++) manages the hardware control, while Python with Pygame handles data processing and visualization.", "images": [{ "src": "./projects/surroundsense/SURROUNDSENSE_WELCOME.webp", "alt": "SurroundSense Welcome Screen" }, { "src": "./projects/surroundsense/SURROUNDSENSE2D.webp", "alt": "SurroundSense 2D Mapping" }, { "src": "./projects/surroundsense/SURROUNDSENSE_TEST.webp", "alt": "SurroundSense Testing" }, { "src": "./projects/surroundsense/SURROUNDSENSE3D.webp", "alt": "SurroundSense 3D Mapping" }] },
-    "project-zero": { "title": "Project Zero", "year": "2025", "tech": ["PHP", "Laravel", "Tailwind CSS", "SQL"], "type": "Solo Project", "fullDescription": "Project Zero is a full-stack job listing platform built with PHP Laravel, styled with Tailwind CSS, and connected to a MySQL database. Made for IT professionals, it links users with companies by finding the right job opportunities that fit their goals, helping them go from zero to career hero.", "images": [{ "src": "./projects/PROJECT ZERO.webp", "alt": "Project Zero Dashboard" }] },
-    "atimonan": { "title": "Municipal Website of Atimonan, Quezon", "year": "2025", "tech": ["HTML", "CSS", "JavaScript", "Google Apps Script", "Firebase"], "type": "Team Project (★ I lead this project)", "fullDescription": "The Municipal Website of Atimonan, Quezon is a community-focused platform developed by our team to give residents and visitors easy access to local information in one place. The Home page highlights the beauty of Atimonan, showcasing its culture, landmarks, and vibrant community life. The Services section provides access to both barangay and municipal-level assistance, programs, and online transactions, while the News section keeps everyone updated with announcements and events. The About page shares the town's history and introduces its current leaders, and the Contact page lists hotlines and communication channels for emergencies.", "images": [{ "src": "./projects/atimonan/ATIMONAN_LOGIN.webp", "alt": "Atimonan Website Login Page" }, { "src": "./projects/atimonan/ATIMONAN_HOME.webp", "alt": "Atimonan Website Home Page" }, { "src": "./projects/atimonan/ATIMONAN_SERVICES.webp", "alt": "Atimonan Website Services Page" }, { "src": "./projects/atimonan/ATIMONAN_NEWS.webp", "alt": "Atimonan Website News Page" }, { "src": "./projects/atimonan/ATIMONAN_ABOUT.webp", "alt": "Atimonan Website About Page" }, { "src": "./projects/atimonan/ATIMONAN_CONTACT.webp", "alt": "Atimonan Website Contact Page" }] },
-    "pokemon-finder": { "title": "Pokemon Finder", "year": "2024", "tech": ["HTML", "CSS", "JavaScript"], "type": "Solo Project", "fullDescription": "Pokémon Finder is a fun web app built using HTML, CSS, and JavaScript. It integrates with a Pokémon API to fetch data and display classic pixel-art Pokémon sprites. Simply search for a Pokémon and the app shows its sprite on screen.", "images": [{ "src": "./projects/POKEMON_FINDER.webp", "alt": "Pokemon Finder Dashboard" }] },
-    "movieboxd": { "title": "Movieboxd", "year": "2024", "tech": ["PHP", "CSS", "SQL"], "type": "Solo Project", "fullDescription": "Movieboxd is a parody of Letterboxd that explores user authentication, focusing on login and registration with a MySQL database. It demonstrates how the frontend connects to the backend and manages user data.", "images": [{ "src": "./projects/movieboxd/MOVIEBOXD1.webp", "alt": "Movieboxd Login" }, { "src": "./projects/movieboxd/MOVIEBOXD2.webp", "alt": "Movieboxd Register" }] },
-    "digital-business-card": { "title": "Digital Business Card", "year": "2024", "tech": ["HTML", "CSS"], "type": "Solo Project", "fullDescription": "Digital Business Card is a clean and minimal web profile built with HTML and CSS to showcase personal information. Inspired by Tyler, The Creator's iconic ID card from Call Me If You Get Lost.", "images": [{ "src": "./projects/BUSINESS_CARD.webp", "alt": "Business Card" }] },
-    "straw-hat-pirates": { "title": "Meet the Straw Hat Pirates", "year": "2024", "tech": ["HTML", "CSS"], "type": "Solo Project", "fullDescription": "Meet the Straw Hat Pirates is a wiki-like website built with HTML and CSS, featuring the members of the Straw Hat Pirates from One Piece. Each character is displayed on a card styled after their iconic bounty poster.", "images": [{ "src": "./projects/STRAWHATS.webp", "alt": "Straw Hat Pirates" }] },
-    "rfid-report-card": { "title": "Arduino-Based RFID System as an Efficient Tracker of the Students' Report Card", "year": "2023", "tech": ["Arduino", "C++"], "type": "Team Project (★ I lead this project)", "fullDescription": "This project is an Arduino-based RFID student tracking system designed to simplify how grades are viewed and shared. When a student taps their RFID card, their grades are instantly shown on an LCD screen for quick access. The system also uses a GSM module to send the results via SMS to both students and parents, ensuring timely updates and promoting transparency.", "images": [{ "src": "./projects/RFID_GRADE.webp", "alt": "RFID Grade System" }] },
-    "project-yu": { "title": "Project Yú", "year": "2019", "tech": ["Arduino", "C++"], "type": "Team Project", "fullDescription": "Project Yú is an Arduino-based robot designed to assist fishermen in locating areas with higher fish abundance. Powered by a solar panel, it uses a submerged pH level sensor to measure water conditions and a GSM module to send real-time updates directly to fishermen.", "note": "Presented at Division Science and Technology Fair 2019 - Science Innovation Expo", "images": [] },
-    "project-talakinesis": { "title": "Project Talakinesis", "year": "2019", "tech": ["Arduino", "C++"], "type": "Team Project", "fullDescription": "Project Talakinesis is an Arduino-based motion-activated lighting system designed to promote efficient energy use. Using a PIR motion sensor, the system detects movement and automatically turns on a light only when needed.", "note": "Presented at 1st Filipino Ideas Expo (2019)", "images": [] },
-    "rfid-passport": { "title": "Arduino-Based RFID Technology as an Efficient Way of Passport Verification", "year": "2019", "tech": ["Arduino", "C++"], "type": "Team Project (★ I lead this project)", "fullDescription": "This project introduces an Arduino-based RFID system that revolutionizes passport verification. With just a single tap of an RFID-enabled passport, a passenger's information instantly appears on the screen, eliminating the delays of manual checks.", "images": [] }
   };
 
-  const base = window.ASSET_BASE || "/assets";
-  Object.values(window.projectsData).forEach(project => {
-    if (project.images) {
-      project.images.forEach(img => {
-        if (img.src.startsWith("./")) {
-          img.src = img.src.replace("./", base + "/");
-        } else if (img.src.startsWith("/")) {
-          img.src = base + img.src;
-        }
-      });
-    }
+  window.projectsData = projectsData;
+
+  Object.values(projectsData).forEach((project) => {
+    project.images.forEach((image) => {
+      if (image.src.startsWith("./")) {
+        image.src = image.src.replace("./", `${base}/`);
+      } else if (image.src.startsWith("/")) {
+        image.src = `${base}${image.src}`;
+      }
+    });
   });
 
-  function setWinImageState(img, state) {
-    const frame = img.closest('[data-win-image-frame]');
-    if (!frame) return;
+  const menuToggle = document.querySelector(".menu-toggle");
+  const siteNav = document.getElementById("site-nav");
+  const themeToggle = document.getElementById("theme-toggle");
 
-    frame.classList.toggle('is-loaded', state === 'loaded');
-    frame.classList.toggle('is-error', state === 'error');
-    frame.classList.toggle('is-loading', state === 'loading');
+  function getStoredTheme() {
+    try {
+      return localStorage.getItem("geinel-theme");
+    } catch {
+      return null;
+    }
   }
 
-  function bindWinImageLoader(img) {
-    setWinImageState(img, img.complete && img.naturalWidth > 0 ? 'loaded' : 'loading');
-
-    img.addEventListener('load', () => setWinImageState(img, 'loaded'));
-    img.addEventListener('error', () => setWinImageState(img, 'error'));
+  function setStoredTheme(theme) {
+    try {
+      localStorage.setItem("geinel-theme", theme);
+    } catch {
+      // Theme still works for the current page if storage is unavailable.
+    }
   }
 
-  document.querySelectorAll('img[data-win-loader]').forEach(bindWinImageLoader);
+  function getSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
 
-  const contentTechRender = document.getElementById('content-technical');
-  if (contentTechRender) {
-    const projKeys = Object.keys(window.projectsData);
-    projKeys.forEach(id => {
-      const p = window.projectsData[id];
-      const typeText = p.type.includes("lead") ? "[LEAD]" : p.type === "Solo Project" ? "[SOLO]" : "[TEAM]";
-      
-      const btn = document.createElement('button');
-      btn.className = 'project-folder';
-      btn.onclick = () => window.openProjectModal(id);
-      btn.style.cssText = "background: transparent; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 8px; font-family: 'Reddit Mono', monospace;";
-      
-      btn.innerHTML = `
-        <svg viewBox="0 0 48 40" width="48" height="40" style="image-rendering: pixelated;" aria-hidden="true">
-          <rect x="0" y="8" width="48" height="30" fill="#FFCC00" />
-          <rect x="0" y="8" width="48" height="30" fill="none" stroke="#AA8800" stroke-width="2" />
-          <rect x="0" y="2" width="20" height="10" fill="#FFCC00" />
-          <rect x="0" y="2" width="20" height="10" fill="none" stroke="#AA8800" stroke-width="2" />
-          <rect x="4" y="12" width="40" height="2" fill="#FFE066" opacity="0.6" />
-        </svg>
-        <span class="fl" style="font-size: 10px; text-align: center; line-height: 1.3; color: var(--win-black); padding: 1px 4px; transition: all 0.1s; word-break: break-word; width: 100%;">${p.title}</span>
-        <span style="font-size: 9px; color: var(--win-gray-dark);">${typeText} · ${p.year}</span>
-      `;
-      contentTechRender.appendChild(btn);
+  function applyTheme(theme, shouldPersist = false) {
+    const nextTheme = theme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = nextTheme;
+    document.documentElement.style.colorScheme = nextTheme;
+
+    if (themeToggle) {
+      const nextLabel = nextTheme === "dark" ? "Light" : "Dark";
+      themeToggle.dataset.mode = nextLabel.toLowerCase();
+      themeToggle.setAttribute("aria-label", `Switch to ${nextLabel.toLowerCase()} mode`);
+      themeToggle.setAttribute("aria-pressed", String(nextTheme === "dark"));
+    }
+
+    if (shouldPersist) setStoredTheme(nextTheme);
+  }
+
+  applyTheme(document.documentElement.dataset.theme || getStoredTheme() || getSystemTheme());
+
+  themeToggle?.addEventListener("click", () => {
+    const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    applyTheme(currentTheme === "dark" ? "light" : "dark", true);
+  });
+
+  if (menuToggle && siteNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = siteNav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    siteNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const hash = link.getAttribute("href") || "";
+        const target = hash.startsWith("#") ? document.getElementById(hash.slice(1)) : null;
+
+        if (target) {
+          event.preventDefault();
+        }
+
+        siteNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+
+        if (!target) return;
+
+        window.requestAnimationFrame(() => {
+          target.scrollIntoView({ block: "start", behavior: "smooth" });
+          window.history.pushState(null, "", hash);
+        });
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (menuToggle.contains(target) || siteNav.contains(target)) return;
+
+      siteNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !siteNav.classList.contains("open")) return;
+
+      siteNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.focus({ preventScroll: true });
     });
   }
 
-  // Modal logic
+  const topReturn = document.querySelector(".top-return");
 
-  const modalOverlay = document.getElementById('modal-overlay');
-  const modalTitle = document.getElementById('modal-title');
-  const modalTypeBadge = document.getElementById('modal-type-badge');
-  const modalYear = document.getElementById('modal-year');
-  const modalTechs = document.getElementById('modal-techs');
-  const modalImagesContainer = document.getElementById('modal-images-container');
-  const modalImage = document.getElementById('modal-image');
-  const modalImageControls = document.getElementById('modal-image-controls');
-  const modalPrev = document.getElementById('modal-prev');
-  const modalNext = document.getElementById('modal-next');
-  const modalImageCount = document.getElementById('modal-image-count');
-  const modalDescription = document.getElementById('modal-description');
-  const modalNoteContainer = document.getElementById('modal-note-container');
-  const modalNote = document.getElementById('modal-note');
-  const modalStatusType = document.getElementById('modal-status-type');
-  const modalStatusTechCount = document.getElementById('modal-status-tech-count');
-  const modalCloseBtn = document.getElementById('modal-close-btn');
+  if (topReturn) {
+    let topReturnTicking = false;
+
+    function updateTopReturnVisibility() {
+      topReturn.classList.toggle("is-visible", window.scrollY > 160);
+      topReturnTicking = false;
+    }
+
+    function requestTopReturnUpdate() {
+      if (topReturnTicking) return;
+      topReturnTicking = true;
+      window.requestAnimationFrame(updateTopReturnVisibility);
+    }
+
+    updateTopReturnVisibility();
+    window.addEventListener("scroll", requestTopReturnUpdate, { passive: true });
+    window.addEventListener("resize", requestTopReturnUpdate);
+  }
+
+  const featuredProjects = document.getElementById("featured-projects");
+  const creativeProjects = document.getElementById("creative-projects");
+  const projectOrder = [
+    "packet-capture",
+    "aws-build-over-nights",
+    "sentinel",
+    "salomed",
+    "lingap",
+    "gdg-pup-nexus",
+    "awscc-pup-website",
+    "tedxpup",
+    "atimonan",
+    "surroundsense",
+    "project-zero",
+    "rfid-report-card",
+    "rfid-passport",
+    "project-yu",
+    "project-talakinesis"
+  ];
+  const creativeProjectOrder = ["photo-editing-projects"];
+  const teamProjectNumbers = new Set([1, 2, 3, 5, 6, 7, 8, 9, 12, 13, 14, 15]);
+  const projectEntries = projectOrder
+    .map((id, index) => {
+      const project = projectsData[id];
+      if (!project) return null;
+      project.classification = teamProjectNumbers.has(index + 1) ? "Team Project" : "Solo Project";
+      return [id, project];
+    })
+    .filter(Boolean);
+  const creativeProjectEntries = creativeProjectOrder.map((id) => [id, projectsData[id]]).filter(([, project]) => project);
+
+  function projectInitials(title) {
+    return title
+      .replace(/\([^)]*\)/g, "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 3)
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+  }
+
+  function projectMedia(project) {
+    if (project.images.length > 0) {
+      return `<img src="${project.images[0].src}" alt="${project.images[0].alt}" loading="lazy" decoding="async">`;
+    }
+    return `<span>${projectInitials(project.shortTitle || project.title)}</span>`;
+  }
+
+  function projectProofBadge(project) {
+    if (!project.proofBadge) return "";
+    return `
+      <span class="project-proof-badge">
+        <span class="project-proof-icon" aria-hidden="true">&#9733;</span>
+        <span>${project.proofBadge}</span>
+      </span>
+    `;
+  }
+
+  function projectTechStack(project) {
+    return `
+      <span class="project-tech-line">
+        <span class="project-tech-label">Stack</span>
+        <span class="project-tech-items">${project.tech.join(" / ")}</span>
+      </span>
+    `;
+  }
+
+  function renderFeaturedProjects() {
+    if (!featuredProjects) return;
+
+    projectEntries.forEach(([id, project], index) => {
+        const number = String(index + 1).padStart(3, "0");
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "featured-project";
+        card.setAttribute("aria-label", `View ${project.title}`);
+        card.innerHTML = `
+          <span class="project-media" aria-hidden="true">${projectMedia(project)}</span>
+          <span class="featured-project-copy">
+            <span class="project-card-meta">
+              <span>${number}</span>
+              <span class="project-card-details">
+                <span class="project-classification">${project.classification}</span>
+                <span class="project-year">${project.year}</span>
+              </span>
+            </span>
+            <span class="project-discipline">${project.discipline}</span>
+            <h3>${project.title}</h3>
+            <p>${project.fullDescription}</p>
+            ${projectProofBadge(project)}
+            ${projectTechStack(project)}
+          </span>
+        `;
+        card.addEventListener("click", () => openProjectModal(id));
+        featuredProjects.appendChild(card);
+      });
+  }
+
+  renderFeaturedProjects();
+
+  function renderCreativeProjects() {
+    if (!creativeProjects) return;
+
+    creativeProjectEntries.forEach(([id, project]) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "featured-project creative-project-card";
+      card.setAttribute("aria-label", `View ${project.title}`);
+      card.innerHTML = `
+        <span class="project-media" aria-hidden="true">${projectMedia(project)}</span>
+        <span class="featured-project-copy">
+          <span class="project-card-meta">
+            <span>Visual Work</span>
+            ${project.year ? `<span>${project.year}</span>` : ""}
+          </span>
+          <span class="project-discipline">${project.discipline}</span>
+          <h3>${project.title}</h3>
+          <p>${project.fullDescription}</p>
+          ${projectTechStack(project)}
+        </span>
+      `;
+      card.addEventListener("click", () => openProjectModal(id));
+      creativeProjects.appendChild(card);
+    });
+  }
+
+  renderCreativeProjects();
+
+  const fieldNotesGrid = document.getElementById("field-notes-grid");
+  const fieldFrames = [
+    { id: "1", file: "1_KIRO_FINALE.webp", w: 1170, h: 2080, c: 1, s: 4, r: 1, mt: 0, ms: 2, mmt: 0 },
+    { id: "2", file: "2_WITH_BRYL.webp", w: 1170, h: 2080, c: 6, s: 2, r: 1, mt: 78, ms: 2, mmt: 22 },
+    { id: "3", file: "3_APAC.webp", w: 1170, h: 2080, c: 9, s: 4, r: 1, mt: 18, ms: 4, mmt: 12 },
+    { id: "3.1", file: "3.1_SEEKERS.webp", w: 1536, h: 2048, c: 3, s: 4, r: 2, mt: 18, ms: 2, mmt: 16 },
+    { id: "4", file: "4_KIRO_NAME.webp", w: 1170, h: 2080, c: 8, s: 2, r: 2, mt: 70, ms: 2, mmt: 24 },
+    { id: "5", file: "5_HUAWEI.webp", w: 1170, h: 2080, c: 10, s: 3, r: 2, mt: 32, ms: 2, mmt: 8 },
+    { id: "6", file: "6_PBW.webp", w: 1170, h: 2080, c: 1, s: 2, r: 1, mt: 18, ms: 2, mmt: 16 },
+    { id: "7", file: "7_CUMULUS.webp", w: 1170, h: 2080, c: 4, s: 3, r: 1, mt: 0, ms: 4, mmt: 8 },
+    { id: "8", file: "8_PYTORCH.webp", w: 1170, h: 2080, c: 8, s: 2, r: 1, mt: 42, ms: 2, mmt: 18 },
+    { id: "9", file: "9_CREATIVES.webp", w: 1170, h: 2080, c: 10, s: 3, r: 1, mt: 8, ms: 2, mmt: 4 },
+    { id: "10", file: "10_ENOV.webp", w: 1170, h: 2080, c: 1, s: 2, r: 2, mt: 18, ms: 2, mmt: 20 },
+    { id: "11", file: "11_PDAX.webp", w: 1170, h: 2080, c: 4, s: 3, r: 2, mt: 0, ms: 4, mmt: 10 },
+    { id: "12", file: "12_PORTGCP.webp", w: 1170, h: 2080, c: 8, s: 2, r: 2, mt: 52, ms: 2, mmt: 18 },
+    { id: "13", file: "13_WITH_AWSPORT.webp", w: 1170, h: 2080, c: 11, s: 2, r: 2, mt: 16, ms: 2, mmt: 6 },
+    { id: "14", file: "14_BUILD_WITH_AI.webp", w: 1170, h: 2080, c: 1, s: 3, r: 1, mt: 0, ms: 2, mmt: 14 },
+    { id: "15", file: "15_VERCEL.webp", w: 1170, h: 2080, c: 5, s: 2, r: 1, mt: 74, ms: 2, mmt: 2 },
+    { id: "16", file: "16_AZURE.webp", w: 1170, h: 2080, c: 9, s: 3, r: 1, mt: 18, ms: 4, mmt: 16 },
+    { id: "17", file: "17_BUILD_STELLAR.webp", w: 1170, h: 2080, c: 2, s: 4, r: 2, mt: 18, ms: 2, mmt: 18 },
+    { id: "18", file: "18_SPARKZERO.webp", w: 1170, h: 2080, c: 7, s: 2, r: 2, mt: 58, ms: 2, mmt: 4, scale: 1.06 },
+    { id: "19", file: "19_AI_MANILA_GDG.webp", w: 1170, h: 2080, c: 10, s: 3, r: 2, mt: 2, ms: 2, mmt: 20 },
+    { id: "20", file: "20_GDG_COSMOS.webp", w: 1170, h: 2080, c: 1, s: 4, r: 3, mt: 14, ms: 4, mmt: 10 },
+    { id: "21", file: "21_ARDUINODAY.webp", w: 1170, h: 2080, c: 6, s: 4, r: 3, mt: 44, ms: 2, mmt: 18 },
+    { id: "22", file: "22_AZURE_NIGHT.webp", w: 1170, h: 2080, c: 11, s: 2, r: 3, mt: 16, ms: 2, mmt: 4 },
+    { id: "23", file: "23_AWSSC_NIGHT.webp", w: 1170, h: 2080, c: 1, s: 3, r: 1, mt: 10, ms: 2, mmt: 10 },
+    { id: "24", file: "24_CCIS_GDG.webp", w: 1170, h: 2080, c: 5, s: 4, r: 1, mt: 0, ms: 4, mmt: 8 },
+    { id: "25", file: "25_TECH_KICKOFF.webp", w: 1170, h: 2080, c: 10, s: 2, r: 1, mt: 48, ms: 2, mmt: 18 },
+    { id: "26", file: "26_AWSCCCLOUDAY.webp", w: 721, h: 1024, c: 2, s: 3, r: 2, mt: 24, ms: 2, mmt: 4 },
+    { id: "27", file: "27_SURROUND.webp", w: 1170, h: 2080, c: 6, s: 3, r: 2, mt: 8, ms: 2, mmt: 18 },
+    { id: "28", file: "28_GOOGLE_IO.webp", w: 1536, h: 2048, c: 10, s: 3, r: 2, mt: 58, ms: 4, mmt: 8 },
+    { id: "29", file: "29_GOLD_ROBOTICS.webp", w: 1170, h: 1449, c: 2, s: 3, r: 1, mt: 10, ms: 2, mmt: 10 },
+    { id: "30", file: "30_WEEMAKE.webp", w: 1169, h: 1443, c: 6, s: 4, r: 1, mt: 0, ms: 4, mmt: 8 },
+    { id: "31", file: "31_SILVER_ROBOTICS.webp", w: 1169, h: 1454, c: 10, s: 3, r: 1, mt: 36, ms: 2, mmt: 16 },
+    { id: "30.1", file: "30.1_TAGISAN.webp", w: 960, h: 720, c: 1, s: 4, r: 2, mt: 24, ms: 2, mmt: 14 },
+    { id: "30.2", file: "30.2_TAGISAN_ROBOT1.webp", w: 2048, h: 1536, c: 6, s: 3, r: 2, mt: 62, ms: 2, mmt: 4 },
+    { id: "30.3", file: "30.3_TAGISAN_ROBOT2.webp", w: 2048, h: 1536, c: 8, s: 4, r: 3, mt: 8, ms: 3, mmt: 18 },
+    { id: "31.1", file: "31.1_MEDAL.webp", w: 1170, h: 1446, c: 2, s: 2, r: 3, mt: 16, ms: 2, mmt: 6 },
+    { id: "31.2", file: "31.2_ID.webp", w: 1170, h: 1453, c: 6, s: 2, r: 4, mt: 8, ms: 2, mmt: 18 },
+    { id: "31.3", file: "31.3_HUNGARY.webp", w: 1170, h: 1448, c: 10, s: 2, r: 5, mt: 2, ms: 2, mmt: 6 },
+    { id: "32", file: "32_INTELLI_2018.webp", w: 1170, h: 1560, c: 1, s: 3, r: 6, mt: 12, ms: 2, mmt: 18 },
+    { id: "33", file: "33_DELEGATE.webp", w: 1169, h: 1166, c: 5, s: 3, r: 6, mt: 42, ms: 2, mmt: 6 },
+    { id: "34", file: "34_ATX.webp", w: 1170, h: 1158, c: 9, s: 3, r: 7, mt: 20, ms: 4, mmt: 16, end: true }
+  ];
+
+  function frameAlt(frame) {
+    const label = frame.file
+      .replace(/^\d+(?:\.\d+)?_/, "")
+      .replace(/\.[^.]+$/, "")
+      .replace(/_/g, " ")
+      .toLowerCase();
+    return `Active Record: ${label}`;
+  }
+
+  function renderFieldNotes() {
+    if (!fieldNotesGrid) return;
+
+    const spreads = [
+      fieldFrames.slice(0, 6),
+      fieldFrames.slice(6, 14),
+      fieldFrames.slice(14, 23),
+      fieldFrames.slice(23, 29),
+      fieldFrames.slice(29)
+    ];
+
+    spreads.forEach((spreadFrames, spreadIndex) => {
+      const spread = document.createElement("div");
+      spread.className = `field-spread field-spread-${spreadIndex + 1}`;
+
+      spreadFrames.forEach((frame) => {
+        const index = fieldFrames.indexOf(frame);
+        const figure = document.createElement("figure");
+        figure.className = `field-frame${frame.end ? " field-frame-end" : ""}`;
+        figure.style.setProperty("--col", frame.c);
+        figure.style.setProperty("--span", frame.s);
+        figure.style.setProperty("--row", frame.r);
+        figure.style.setProperty("--mt", `${frame.mt}px`);
+        figure.style.setProperty("--mspan", frame.ms);
+        figure.style.setProperty("--mmt", `${frame.mmt}px`);
+        figure.style.setProperty("--frame-scale", frame.scale || 1);
+        figure.innerHTML = `
+          <button class="field-frame-button" type="button" aria-label="Open ${frameAlt(frame)}">
+            <img src="${base}/flex-images/${frame.file}" alt="${frameAlt(frame)}" width="${frame.w}" height="${frame.h}" loading="${index < 4 ? "eager" : "lazy"}" decoding="async">
+          </button>
+        `;
+        figure.querySelector("button").addEventListener("click", () => openFieldViewer(index));
+        spread.appendChild(figure);
+      });
+
+      fieldNotesGrid.appendChild(spread);
+    });
+  }
+
+  renderFieldNotes();
+
+  const scrollSections = Array.from(document.querySelectorAll(".section-shell"));
+  const toneTargets = Array.from(document.querySelectorAll(".hero-portrait img, .project-media img, .field-frame img"));
+
+  if (scrollSections.length > 0 || toneTargets.length > 0) {
+    let scrollStateFrame = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+    const smoothStep = (value) => value * value * (3 - 2 * value);
+
+    const setActiveSection = (activeSection) => {
+      scrollSections.forEach((section) => {
+        section.classList.toggle("section-active", section === activeSection);
+      });
+    };
+
+    const updateScrollState = () => {
+      scrollStateFrame = 0;
+
+      const viewportHeight = window.innerHeight || 1;
+      const sectionReadingLine = viewportHeight * 0.46;
+      const imageReadingLine = viewportHeight * 0.52;
+      const imageFadeRange = Math.max(180, viewportHeight * 0.26);
+      let nearestSection = scrollSections[0];
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      scrollSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > viewportHeight) return;
+
+        const sectionCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(sectionCenter - sectionReadingLine);
+
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestSection = section;
+        }
+      });
+
+      if (nearestSection) setActiveSection(nearestSection);
+
+      toneTargets.forEach((target) => {
+        const rect = target.getBoundingClientRect();
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
+        const enoughVisible = visibleHeight > Math.min(rect.height, viewportHeight) * 0.08;
+        let distance = 0;
+
+        if (rect.top > imageReadingLine) {
+          distance = rect.top - imageReadingLine;
+        } else if (rect.bottom < imageReadingLine) {
+          distance = imageReadingLine - rect.bottom;
+        }
+
+        const rawProgress = enoughVisible ? clamp(1 - distance / imageFadeRange, 0, 1) : 0;
+        const progress = smoothStep(rawProgress);
+        const gray = 1 - progress;
+        const contrast = 1.04 - progress * 0.04;
+
+        target.style.setProperty("--tone-gray", gray.toFixed(3));
+        target.style.setProperty("--tone-contrast", contrast.toFixed(3));
+      });
+    };
+
+    const scheduleScrollStateUpdate = () => {
+      if (scrollStateFrame) return;
+      scrollStateFrame = window.requestAnimationFrame(updateScrollState);
+    };
+
+    updateScrollState();
+    window.addEventListener("scroll", scheduleScrollStateUpdate, { passive: true });
+    window.addEventListener("resize", scheduleScrollStateUpdate);
+  }
+
+  const modalOverlay = document.getElementById("modal-overlay");
+  const projectModal = document.querySelector(".project-modal");
+  const modalTitle = document.getElementById("modal-title");
+  const modalTypeBadge = document.getElementById("modal-type-badge");
+  const modalYear = document.getElementById("modal-year");
+  const modalClassification = document.getElementById("modal-classification");
+  const modalTechs = document.getElementById("modal-techs");
+  const modalImagesContainer = document.getElementById("modal-images-container");
+  const modalImage = document.getElementById("modal-image");
+  const modalImageControls = document.getElementById("modal-image-controls");
+  const modalPrev = document.getElementById("modal-prev");
+  const modalNext = document.getElementById("modal-next");
+  const modalImageSlider = document.getElementById("modal-image-slider");
+  const modalImageCount = document.getElementById("modal-image-count");
+  const modalDescription = document.getElementById("modal-description");
+  const modalProofBadge = document.getElementById("modal-proof-badge");
+  const modalNoteContainer = document.getElementById("modal-note-container");
+  const modalNote = document.getElementById("modal-note");
+  const modalStatusType = document.getElementById("modal-status-type");
+  const modalStatusTechCount = document.getElementById("modal-status-tech-count");
+  const modalCloseBtn = document.getElementById("modal-close-btn");
+  const fieldViewer = document.getElementById("field-viewer");
+  const fieldViewerImage = document.getElementById("field-viewer-image");
+  const fieldViewerCount = document.getElementById("field-viewer-count");
+  const fieldViewerProgressCount = document.getElementById("field-viewer-progress-count");
+  const fieldViewerSlider = document.getElementById("field-viewer-slider");
+  const fieldViewerClose = document.getElementById("field-viewer-close");
+  const fieldViewerPrev = document.getElementById("field-viewer-prev");
+  const fieldViewerNext = document.getElementById("field-viewer-next");
+  const cvOpenButton = document.getElementById("cv-open-button");
+  const cvViewer = document.getElementById("cv-viewer");
+  const cvCloseButton = document.getElementById("cv-close-button");
+  const cvFrame = document.getElementById("cv-frame");
 
   let currentProjectImages = [];
   let currentImageIndex = 0;
+  let currentFieldIndex = 0;
+  let modalAutoplayTimer = 0;
+  let modalTouchStartX = 0;
+  let modalTouchStartY = 0;
+  let modalTouchStartTime = 0;
+  let modalTouchHandledUntil = 0;
+  const modalAutoplayDelay = 5400;
+  const modalReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  window.openProjectModal = function (projectId) {
-    const project = window.projectsData[projectId];
-    if (!project) return;
+  function formatImageCount(index, total) {
+    return `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+  }
+  let cvScrollY = 0;
+  let cvLastFocused = null;
+  let cvUnlockTimer = 0;
+  let cvLocked = false;
+  let cvPreviousBodyStyle = null;
+  let cvPreviousHtmlScrollBehavior = "";
+  const cvReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    modalTitle.textContent = project.title;
+  function lockCvScroll() {
+    if (cvLocked) return;
 
-    const isLead = project.type.includes('lead');
-    const isSolo = project.type === 'Solo Project';
+    const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
+    cvScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    cvPreviousHtmlScrollBehavior = document.documentElement.style.scrollBehavior;
+    cvPreviousBodyStyle = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+      paddingRight: document.body.style.paddingRight
+    };
 
-    modalTypeBadge.style.background = isLead ? 'var(--win-blue)' : 'var(--win-gray)';
-    modalTypeBadge.style.color = isLead ? 'var(--win-white)' : 'var(--win-black)';
-    modalTypeBadge.querySelector('span:first-child').textContent = isSolo ? 'SOLO PROJECT' : isLead ? 'TEAM PROJECT — LEAD' : 'TEAM PROJECT';
-    modalYear.textContent = project.year;
-
-    modalTechs.innerHTML = '';
-    project.tech.forEach(t => {
-      const span = document.createElement('span');
-      span.className = 'win-button';
-      span.style.cssText = 'font-size: 10px; padding: 3px 8px; min-width: auto; cursor: default;';
-      span.textContent = t;
-      modalTechs.appendChild(span);
-    });
-
-    currentProjectImages = project.images || [];
-    currentImageIndex = 0;
-
-    if (currentProjectImages.length > 0) {
-      modalImagesContainer.style.display = 'block';
-      updateModalImage();
-      if (currentProjectImages.length > 1) {
-        modalImageControls.style.display = 'flex';
-      } else {
-        modalImageControls.style.display = 'none';
-      }
-    } else {
-      modalImagesContainer.style.display = 'none';
-    }
-
-    modalDescription.textContent = project.fullDescription;
-
-    if (project.note) {
-      modalNoteContainer.style.display = 'block';
-      modalNote.textContent = project.note;
-    } else {
-      modalNoteContainer.style.display = 'none';
-    }
-
-    modalStatusType.textContent = project.type;
-    modalStatusTechCount.textContent = `${project.tech.length} tech(s)`;
-
-    modalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  };
-
-  function closeProjectModal() {
-    modalOverlay.classList.remove('active');
-    document.body.style.overflow = '';
+    document.documentElement.style.scrollBehavior = "auto";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${cvScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+    if (scrollbarGap > 0) document.body.style.paddingRight = `${scrollbarGap}px`;
+    cvLocked = true;
   }
 
-  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeProjectModal);
-  if (modalOverlay) {
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) closeProjectModal();
+  function unlockCvScroll() {
+    if (!cvLocked || !cvPreviousBodyStyle) return;
+
+    Object.assign(document.body.style, cvPreviousBodyStyle);
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, cvScrollY);
+    window.requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = cvPreviousHtmlScrollBehavior;
     });
+    cvPreviousBodyStyle = null;
+    cvLocked = false;
   }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-      closeProjectModal();
+  function setCvPageInert(isInert) {
+    [document.querySelector(".site-header"), document.querySelector("main"), document.querySelector(".site-footer")]
+      .filter(Boolean)
+      .forEach((element) => {
+        if ("inert" in element) element.inert = isInert;
+      });
+  }
+
+  function getCvFocusableElements() {
+    if (!cvViewer) return [];
+    return Array.from(cvViewer.querySelectorAll("a[href], button:not([disabled]), iframe"))
+      .filter((element) => element.offsetParent !== null);
+  }
+
+  function openCvViewer() {
+    if (!cvViewer) return;
+
+    window.clearTimeout(cvUnlockTimer);
+    cvLastFocused = document.activeElement;
+    if (cvFrame && !cvFrame.getAttribute("src")) cvFrame.src = cvFrame.dataset.src;
+
+    lockCvScroll();
+    setCvPageInert(true);
+    cvViewer.classList.add("active");
+    cvViewer.setAttribute("aria-hidden", "false");
+    cvCloseButton?.focus({ preventScroll: true });
+  }
+
+  function closeCvViewer() {
+    if (!cvViewer?.classList.contains("active")) return;
+
+    cvViewer.classList.remove("active");
+    cvViewer.setAttribute("aria-hidden", "true");
+    setCvPageInert(false);
+
+    cvUnlockTimer = window.setTimeout(() => {
+      unlockCvScroll();
+      if (cvLastFocused instanceof HTMLElement) cvLastFocused.focus({ preventScroll: true });
+    }, cvReducedMotion.matches ? 1 : 260);
+  }
+
+  cvOpenButton?.addEventListener("click", openCvViewer);
+  cvCloseButton?.addEventListener("click", closeCvViewer);
+  cvViewer?.addEventListener("click", (event) => {
+    if (event.target === cvViewer || event.target instanceof Element && event.target.classList.contains("cv-pdf-shell")) {
+      closeCvViewer();
     }
   });
 
-  function updateModalImage() {
-    if (currentProjectImages.length === 0) return;
+  document.addEventListener("keydown", (event) => {
+    if (!cvViewer?.classList.contains("active")) return;
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeCvViewer();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusable = getCvFocusableElements();
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  function canAutoplayModalImages() {
+    return Boolean(
+      modalOverlay?.classList.contains("active") &&
+      currentProjectImages.length > 1 &&
+      !modalReducedMotion.matches &&
+      !document.hidden &&
+      !shouldHoldModalAutoplay()
+    );
+  }
+
+  function pauseModalAutoplay() {
+    window.clearTimeout(modalAutoplayTimer);
+    modalAutoplayTimer = 0;
+  }
+
+  function scheduleModalAutoplay() {
+    pauseModalAutoplay();
+    if (!canAutoplayModalImages()) return;
+
+    modalAutoplayTimer = window.setTimeout(() => {
+      moveModalImage(1, { source: "auto" });
+      scheduleModalAutoplay();
+    }, modalAutoplayDelay);
+  }
+
+  function shouldHoldModalAutoplay() {
+    return Boolean(
+      modalImagesContainer?.matches(":hover") ||
+      modalImagesContainer?.contains(document.activeElement)
+    );
+  }
+
+  function resumeModalAutoplay() {
+    if (shouldHoldModalAutoplay()) return;
+    scheduleModalAutoplay();
+  }
+
+  function updateModalImage(options = {}) {
+    if (!modalImage || !modalImageCount || currentProjectImages.length === 0) return;
     const image = currentProjectImages[currentImageIndex];
-    setWinImageState(modalImage, 'loading');
-    modalImage.removeAttribute('src');
+    modalImage.src = image.src;
     modalImage.alt = image.alt;
-    requestAnimationFrame(() => {
-      modalImage.src = image.src;
-      if (modalImage.complete && modalImage.naturalWidth > 0) {
-        setWinImageState(modalImage, 'loaded');
-      }
-    });
-    modalImageCount.textContent = `${currentImageIndex + 1} / ${currentProjectImages.length}`;
-  }
-
-  if (modalPrev) {
-    modalPrev.addEventListener('click', () => {
-      currentImageIndex = (currentImageIndex - 1 + currentProjectImages.length) % currentProjectImages.length;
-      updateModalImage();
-    });
-  }
-
-  if (modalNext) {
-    modalNext.addEventListener('click', () => {
-      currentImageIndex = (currentImageIndex + 1) % currentProjectImages.length;
-      updateModalImage();
-    });
-  }
-
-  // Preloader removal
-  setTimeout(() => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-      preloader.style.opacity = '0';
-      setTimeout(() => preloader.remove(), 300);
+    modalImageCount.textContent = formatImageCount(currentImageIndex, currentProjectImages.length);
+    if (modalImageSlider) {
+      modalImageSlider.max = String(currentProjectImages.length);
+      modalImageSlider.value = String(currentImageIndex + 1);
+      modalImageSlider.style.setProperty("--slider-progress", `${(currentImageIndex / Math.max(currentProjectImages.length - 1, 1)) * 100}%`);
     }
-  }, 2000);
-
-  // Chatbot Logic
-  const chatTab = document.getElementById('chat-tab');
-  const chatTabArrow = document.getElementById('chat-tab-arrow');
-  const chatWindow = document.getElementById('chat-window');
-  const chatCloseBtn = document.getElementById('chat-close-btn');
-  const chatTitlebar = document.getElementById('chat-titlebar');
-  const chatForm = document.getElementById('chat-form');
-  const chatInput = document.getElementById('chat-input');
-  const chatMessages = document.getElementById('chat-messages');
-
-  let messageHistory = [];
-
-  function toggleChat() {
-    if (!chatWindow) return;
-    const isHidden = chatWindow.style.display === 'none' || chatWindow.style.display === '';
-    if (isHidden) {
-      chatWindow.style.display = 'flex';
-      if (chatTabArrow) chatTabArrow.textContent = '▼';
-      if (chatInput) chatInput.focus();
-      
-      // Auto-collapse Start menu when opening Ask Geinel chat
-      if (typeof startMenu !== 'undefined' && startMenu && startMenu.classList.contains('active')) {
-        startMenu.classList.remove('active');
-        if (typeof startMenuOverlay !== 'undefined' && startMenuOverlay) startMenuOverlay.classList.remove('active');
-        if (typeof startBtn !== 'undefined' && startBtn) startBtn.classList.remove('active');
-      }
-    } else {
-      chatWindow.style.display = 'none';
-      if (chatTabArrow) chatTabArrow.textContent = '▲';
-    }
-  }
-
-  if (chatTab) chatTab.addEventListener('click', toggleChat);
-  if (chatTitlebar) chatTitlebar.addEventListener('click', toggleChat);
-  
-  if (chatCloseBtn) {
-    chatCloseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      chatWindow.style.display = 'none';
-      if (chatTabArrow) chatTabArrow.textContent = '▲';
-    });
-  }
-
-  function addChatMessage(role, text) {
-    const msgDiv = document.createElement('div');
-    msgDiv.style.fontSize = '11px';
-    const strong = document.createElement('strong');
-    strong.textContent = role === 'user' ? 'You: ' : 'Ask Geinel: ';
-    msgDiv.appendChild(strong);
-    msgDiv.appendChild(document.createTextNode(text));
-    chatMessages.appendChild(msgDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  if (chatForm) {
-    chatForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const text = chatInput.value.trim();
-      if (!text) return;
-
-      addChatMessage('user', text);
-      messageHistory.push({ role: 'user', text });
-      chatInput.value = '';
-      chatInput.disabled = true;
-
-      try {
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: messageHistory })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok && data.reply) {
-          addChatMessage('assistant', data.reply);
-          messageHistory.push({ role: 'assistant', text: data.reply });
-        } else {
-          addChatMessage('assistant', data.error || 'Error connecting to the chat server.');
+    if (options.animate && !modalReducedMotion.matches) {
+      modalImage.animate(
+        [
+          { opacity: 0.76, transform: "translateY(2px)" },
+          { opacity: 1, transform: "translateY(0)" }
+        ],
+        {
+          duration: 220,
+          easing: "cubic-bezier(0.23, 1, 0.32, 1)"
         }
-      } catch (error) {
-        addChatMessage('assistant', 'Error connecting to the chat server.');
-      } finally {
-        chatInput.disabled = false;
-        chatInput.focus();
-      }
-    });
+      );
+    }
   }
+
+  function moveModalImage(direction, options = {}) {
+    if (currentProjectImages.length === 0) return;
+    currentImageIndex = (currentImageIndex + direction + currentProjectImages.length) % currentProjectImages.length;
+    updateModalImage({ animate: true });
+    if (options.source !== "auto") scheduleModalAutoplay();
+  }
+
+  function getImageEdgeDirection(imageElement, clientX) {
+    if (!imageElement) return 0;
+    const rect = imageElement.getBoundingClientRect();
+    if (rect.width <= 0 || clientX < rect.left || clientX > rect.right) return 0;
+
+    const edgeWidth = Math.min(Math.max(rect.width * 0.24, 72), 160);
+    if (clientX <= rect.left + edgeWidth) return -1;
+    if (clientX >= rect.right - edgeWidth) return 1;
+    return 0;
+  }
+
+  function setImageEdgeCursor(container, imageElement, clientX) {
+    if (!container || !imageElement) return;
+    const direction = getImageEdgeDirection(imageElement, clientX);
+    container.classList.toggle("is-prev-zone", direction === -1);
+    container.classList.toggle("is-next-zone", direction === 1);
+  }
+
+  function openProjectModal(projectId) {
+    const project = projectsData[projectId];
+    if (!project || !modalOverlay) return;
+    const isVisualArchive = projectId === "photo-editing-projects";
+
+    projectModal?.classList.toggle("project-modal-visual", isVisualArchive);
+    modalTitle.textContent = project.title;
+    modalTypeBadge.textContent = project.type;
+    if (modalClassification) {
+      modalClassification.textContent = project.classification || "";
+      modalClassification.hidden = !project.classification;
+    }
+    modalYear.textContent = project.year;
+    modalYear.hidden = !project.year;
+    modalDescription.textContent = project.fullDescription;
+    if (modalProofBadge) {
+      const proofLabel = modalProofBadge.querySelector("[data-proof-label]");
+      if (proofLabel) proofLabel.textContent = project.proofBadge || "";
+      modalProofBadge.hidden = !project.proofBadge;
+    }
+    modalStatusType.textContent = project.discipline;
+    modalStatusTechCount.textContent = `${project.tech.length} tech(s)`;
+
+    modalTechs.innerHTML = "";
+    project.tech.forEach((tech) => {
+      const tag = document.createElement("span");
+      tag.textContent = tech;
+      modalTechs.appendChild(tag);
+    });
+
+    currentProjectImages = project.images;
+    currentImageIndex = 0;
+
+    if (currentProjectImages.length > 0) {
+      modalImagesContainer.hidden = false;
+      modalImageControls.hidden = currentProjectImages.length < 2;
+      updateModalImage();
+    } else {
+      modalImagesContainer.hidden = true;
+      modalImage.removeAttribute("src");
+      modalImage.alt = "";
+    }
+
+    if (project.note) {
+      modalNoteContainer.hidden = false;
+      modalNote.textContent = project.note;
+    } else {
+      modalNoteContainer.hidden = true;
+      modalNote.textContent = "";
+    }
+
+    modalOverlay.classList.add("active");
+    modalOverlay.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    scheduleModalAutoplay();
+  }
+
+  function closeProjectModal() {
+    if (!modalOverlay) return;
+    pauseModalAutoplay();
+    modalOverlay.classList.remove("active");
+    modalOverlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+  }
+
+  modalCloseBtn?.addEventListener("click", closeProjectModal);
+  modalOverlay?.addEventListener("click", (event) => {
+    if (event.target === modalOverlay) closeProjectModal();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modalOverlay?.classList.contains("active")) {
+      closeProjectModal();
+    }
+  });
+  modalPrev?.addEventListener("click", () => {
+    moveModalImage(-1);
+  });
+  modalNext?.addEventListener("click", () => {
+    moveModalImage(1);
+  });
+  modalImageSlider?.addEventListener("input", () => {
+    if (currentProjectImages.length === 0) return;
+    currentImageIndex = Math.min(Math.max(Number(modalImageSlider.value) - 1, 0), currentProjectImages.length - 1);
+    updateModalImage({ animate: true });
+    scheduleModalAutoplay();
+  });
+  modalImagesContainer?.addEventListener("pointerenter", pauseModalAutoplay);
+  modalImagesContainer?.addEventListener("pointerleave", resumeModalAutoplay);
+  modalImagesContainer?.addEventListener("focusin", pauseModalAutoplay);
+  modalImagesContainer?.addEventListener("focusout", () => {
+    window.requestAnimationFrame(resumeModalAutoplay);
+  });
+  modalImagesContainer?.addEventListener("touchstart", (event) => {
+    if (currentProjectImages.length < 2 || event.touches.length !== 1) return;
+    modalTouchStartX = event.touches[0].clientX;
+    modalTouchStartY = event.touches[0].clientY;
+    modalTouchStartTime = Date.now();
+    pauseModalAutoplay();
+  }, { passive: true });
+  modalImagesContainer?.addEventListener("touchend", (event) => {
+    if (currentProjectImages.length < 2 || modalTouchStartTime === 0) return;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - modalTouchStartX;
+    const deltaY = touch.clientY - modalTouchStartY;
+    const elapsed = Math.max(Date.now() - modalTouchStartTime, 1);
+    const velocity = Math.abs(deltaX) / elapsed;
+    const isHorizontal = Math.abs(deltaX) > Math.abs(deltaY) * 1.35;
+    const isSwipe = Math.abs(deltaX) > 46 || velocity > 0.42;
+
+    if (isHorizontal && isSwipe) {
+      moveModalImage(deltaX > 0 ? -1 : 1);
+      modalTouchHandledUntil = Date.now() + 420;
+    } else {
+      scheduleModalAutoplay();
+    }
+
+    modalTouchStartTime = 0;
+  }, { passive: true });
+  modalImagesContainer?.addEventListener("click", (event) => {
+    if (Date.now() < modalTouchHandledUntil || currentProjectImages.length < 2) return;
+    if (event.target instanceof Element && event.target.closest(".modal-image-controls")) return;
+
+    const direction = getImageEdgeDirection(modalImage, event.clientX);
+    if (!direction) return;
+
+    event.preventDefault();
+    moveModalImage(direction);
+  });
+  modalImagesContainer?.addEventListener("pointermove", (event) => {
+    if (currentProjectImages.length < 2 || event.pointerType === "touch") return;
+    setImageEdgeCursor(modalImagesContainer, modalImage, event.clientX);
+  });
+  modalImagesContainer?.addEventListener("pointerleave", () => {
+    modalImagesContainer.classList.remove("is-prev-zone", "is-next-zone");
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      pauseModalAutoplay();
+    } else {
+      resumeModalAutoplay();
+    }
+  });
+
+  function updateFieldViewer() {
+    if (!fieldViewerImage || !fieldViewerCount) return;
+    const frame = fieldFrames[currentFieldIndex];
+    fieldViewerImage.src = `${base}/flex-images/${frame.file}`;
+    fieldViewerImage.alt = frameAlt(frame);
+    fieldViewerImage.width = frame.w;
+    fieldViewerImage.height = frame.h;
+    fieldViewerCount.textContent = "Active Record";
+    if (fieldViewerProgressCount) {
+      fieldViewerProgressCount.textContent = formatImageCount(currentFieldIndex, fieldFrames.length);
+    }
+    if (fieldViewerSlider) {
+      fieldViewerSlider.max = String(fieldFrames.length);
+      fieldViewerSlider.value = String(currentFieldIndex + 1);
+      fieldViewerSlider.style.setProperty("--slider-progress", `${(currentFieldIndex / Math.max(fieldFrames.length - 1, 1)) * 100}%`);
+    }
+  }
+
+  function openFieldViewer(index) {
+    if (!fieldViewer) return;
+    currentFieldIndex = index;
+    updateFieldViewer();
+    fieldViewer.classList.add("active");
+    fieldViewer.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+  }
+
+  function closeFieldViewer() {
+    if (!fieldViewer) return;
+    fieldViewer.classList.remove("active");
+    fieldViewer.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+  }
+
+  function moveFieldViewer(direction) {
+    currentFieldIndex = (currentFieldIndex + direction + fieldFrames.length) % fieldFrames.length;
+    updateFieldViewer();
+  }
+
+  fieldViewerClose?.addEventListener("click", closeFieldViewer);
+  fieldViewerPrev?.addEventListener("click", () => moveFieldViewer(-1));
+  fieldViewerNext?.addEventListener("click", () => moveFieldViewer(1));
+  fieldViewerSlider?.addEventListener("input", () => {
+    currentFieldIndex = Math.min(Math.max(Number(fieldViewerSlider.value) - 1, 0), fieldFrames.length - 1);
+    updateFieldViewer();
+  });
+  fieldViewer?.addEventListener("click", (event) => {
+    if (event.target === fieldViewer) closeFieldViewer();
+  });
+  fieldViewerImage?.addEventListener("click", (event) => {
+    const direction = getImageEdgeDirection(fieldViewerImage, event.clientX);
+    if (!direction) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    moveFieldViewer(direction);
+  });
+  fieldViewerImage?.addEventListener("pointermove", (event) => {
+    if (event.pointerType === "touch") return;
+    setImageEdgeCursor(fieldViewerImage, fieldViewerImage, event.clientX);
+  });
+  fieldViewerImage?.addEventListener("pointerleave", () => {
+    fieldViewerImage.classList.remove("is-prev-zone", "is-next-zone");
+  });
+  document.addEventListener("keydown", (event) => {
+    if (!fieldViewer?.classList.contains("active")) return;
+    if (event.key === "Escape") closeFieldViewer();
+    if (event.key === "ArrowLeft") moveFieldViewer(-1);
+    if (event.key === "ArrowRight") moveFieldViewer(1);
+  });
 });

@@ -3,734 +3,501 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Geinel's Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/x-icon" href="__ASSET_BASE_URL__/favicons/favicon.ico">
-  <script>
+  <title>Geinel Ni&ntilde;o A. Dungao</title>
+  <script nonce="__CSP_NONCE__">
+    (() => {
+      try {
+        const savedTheme = localStorage.getItem("geinel-theme");
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const theme = savedTheme || systemTheme;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
     window.ASSET_BASE = "__ASSET_BASE_URL__" !== "__ASSET_BASE_URL__" ? "__ASSET_BASE_URL__" : "/assets";
   </script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="__ASSET_BASE_URL__/favicons/favicon.ico">
 </head>
 <body>
-  
-  <!-- Preloader -->
-  <div id="preloader" style="position: fixed; inset: 0; z-index: 10000; background: var(--win-teal); display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease;">
-    <div style="width: min(260px, calc(100vw - 32px)); background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); padding: 20px; text-align: center; font-family: monospace; font-size: 14px;">
-      <div style="margin-bottom: 10px; font-weight: bold;">Loading Portfolio...</div>
-      <div class="win-progress win-progress--determinate" aria-hidden="true">
-        <span class="win-progress-bar"></span>
-      </div>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="#home" aria-label="Go to home">
+      <img class="brand-mark" src="__ASSET_BASE_URL__/favicons/apple-touch-icon.png" alt="" width="36" height="36" aria-hidden="true">
+      <span class="brand-copy">Geinel Ni&ntilde;o A. Dungao</span>
+    </a>
+    <div class="header-actions">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Index</button>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21.1 13.9A8.6 8.6 0 0 1 10.1 2.9 9.1 9.1 0 1 0 21.1 13.9Z"></path>
+        </svg>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+        </svg>
+      </button>
     </div>
-  </div>
+    <nav id="site-nav" class="site-nav">
+      <a href="#experience"><span>02</span>Professional Experience</a>
+      <a href="#projects"><span>03</span>Projects</a>
+      <a href="#leadership"><span>04</span>Leadership</a>
+      <a href="#skills"><span>05</span>Skills</a>
+      <a href="#awards"><span>06</span>Awards</a>
+      <a href="#certifications"><span>07</span>Certifications</a>
+      <a href="#education"><span>08</span>Education</a>
+      <a href="#field-notes"><span>09</span>Active Record</a>
+      <a href="#contact"><span>10</span>Contact</a>
+    </nav>
+  </header>
 
-  <!-- Desktop Icons (Navbar) -->
-  <div id="desktop-icons" style="position: fixed; top: 24px; left: 8px; z-index: 100; display: flex; flex-direction: column; gap: 6px; max-height: calc(100vh - 60px); overflow-y: auto; overflow-x: hidden; padding: 4px; width: 80px;">
-    
-    <a href="#home" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><rect x="8" y="2" width="8" height="7" fill="#008080"/><rect x="9" y="3" width="6" height="2" fill="#00AAAA"/><rect x="4" y="11" width="16" height="11" fill="#C0C0C0"/><rect x="4" y="11" width="16" height="2" fill="#DFDFDF"/><rect x="4" y="11" width="2" height="11" fill="#DFDFDF"/><rect x="18" y="11" width="2" height="11" fill="#808080"/><rect x="4" y="20" width="16" height="2" fill="#808080"/></svg>
-      </div>
-      <div class="win-icon-label">About Me</div>
-    </a>
-    
-    <a href="#experience" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><rect x="8" y="3" width="8" height="3" fill="#808080"/><rect x="9" y="3" width="6" height="2" fill="#C0C0C0"/><rect x="2" y="6" width="20" height="14" fill="#FFCC00"/><rect x="2" y="6" width="20" height="2" fill="#FFE066"/><rect x="2" y="6" width="2" height="14" fill="#FFE066"/><rect x="20" y="6" width="2" height="14" fill="#AA8800"/><rect x="2" y="18" width="20" height="2" fill="#AA8800"/><rect x="2" y="12" width="20" height="2" fill="#AA8800"/><rect x="10" y="10" width="4" height="4" fill="#C0C0C0"/></svg>
-      </div>
-      <div class="win-icon-label">Experience</div>
-    </a>
-    
-    <a href="#projects" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><rect x="1" y="7" width="8" height="3" fill="#FFCC00"/><rect x="1" y="9" width="22" height="13" fill="#FFCC00"/><rect x="1" y="9" width="22" height="2" fill="#FFE566"/><rect x="1" y="9" width="2" height="13" fill="#FFE566"/><rect x="21" y="9" width="2" height="13" fill="#AA8800"/><rect x="1" y="20" width="22" height="2" fill="#AA8800"/></svg>
-      </div>
-      <div class="win-icon-label">Projects</div>
-    </a>
-    
-    <a href="#education" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><polygon points="12,3 22,8 12,13 2,8" fill="#008080"/><polygon points="12,3 22,8 12,13 2,8" fill="none" stroke="#00AAAA" stroke-width="1"/><rect x="19" y="8" width="2" height="7" fill="#808080"/><rect x="18" y="15" width="3" height="2" fill="#808080"/><rect x="7" y="13" width="10" height="6" fill="#008080"/><rect x="7" y="13" width="10" height="2" fill="#00AAAA"/></svg>
-      </div>
-      <div class="win-icon-label">Education</div>
-    </a>
-    
-    <a href="#skills" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><rect x="9" y="1" width="6" height="4" fill="#008080"/><rect x="9" y="19" width="6" height="4" fill="#008080"/><rect x="1" y="9" width="4" height="6" fill="#008080"/><rect x="19" y="9" width="4" height="6" fill="#008080"/><rect x="5" y="5" width="14" height="14" fill="#008080"/><rect x="5" y="5" width="14" height="2" fill="#00AAAA"/><rect x="5" y="5" width="2" height="14" fill="#00AAAA"/><rect x="17" y="5" width="2" height="14" fill="#005555"/><rect x="5" y="17" width="14" height="2" fill="#005555"/><rect x="8" y="8" width="8" height="8" fill="#C0C0C0"/><rect x="8" y="8" width="8" height="2" fill="#DFDFDF"/></svg>
-      </div>
-      <div class="win-icon-label">Skills</div>
-    </a>
-    
-    <a href="#achievements" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><rect x="7" y="2" width="10" height="9" fill="#FFCC00"/><rect x="7" y="2" width="10" height="2" fill="#FFE566"/><rect x="7" y="2" width="2" height="9" fill="#FFE566"/><rect x="15" y="2" width="2" height="9" fill="#AA8800"/><rect x="3" y="2" width="4" height="6" fill="#FFCC00"/><rect x="17" y="2" width="4" height="6" fill="#FFCC00"/><rect x="10" y="11" width="4" height="4" fill="#C0C0C0"/><rect x="6" y="15" width="12" height="3" fill="#C0C0C0"/><rect x="6" y="15" width="12" height="1" fill="#DFDFDF"/></svg>
-      </div>
-      <div class="win-icon-label">Achievements</div>
-    </a>
-    
-    <a href="#certifications" class="win-icon">
-      <div style="width: 40px; height: 40px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" width="24" height="24" style="image-rendering: pixelated; display: block; flex-shrink: 0"><rect x="3" y="1" width="14" height="22" fill="#FFFFFF"/><rect x="3" y="1" width="14" height="1" fill="#DFDFDF"/><rect x="3" y="1" width="1" height="22" fill="#DFDFDF"/><rect x="15" y="1" width="2" height="22" fill="#808080"/><rect x="3" y="21" width="14" height="2" fill="#808080"/><rect x="13" y="1" width="4" height="4" fill="#C0C0C0"/><rect x="13" y="1" width="1" height="4" fill="#808080"/><rect x="13" y="4" width="4" height="1" fill="#808080"/><rect x="6" y="7" width="8" height="1" fill="#000080"/><rect x="6" y="10" width="7" height="1" fill="#000080"/><rect x="6" y="13" width="8" height="1" fill="#000080"/><rect x="6" y="16" width="5" height="1" fill="#000080"/></svg>
-      </div>
-      <div class="win-icon-label">Certifications</div>
-    </a>
-  </div>
-
-  <!-- Start Menu -->
-  <div id="start-menu-overlay" class="start-menu-overlay"></div>
-  <div id="start-menu" class="win-window start-menu">
-    <div class="win-titlebar"><span style="font-weight: bold;">Geinel Niño A. Dungao</span></div>
-    <div style="display: flex; background: var(--win-gray);">
-      <div style="width: 30px; background: linear-gradient(180deg, var(--win-blue) 0%, var(--win-teal) 100%); display: flex; align-items: flex-end; padding: 8px 4px; flex-shrink: 0;">
-        <div style="writing-mode: vertical-rl; transform: rotate(180deg); color: var(--win-white); font-weight: bold; font-size: 13px; letter-spacing: 2px;">Portfolio</div>
-      </div>
-      <div style="flex: 1;">
-        <a href="#home" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-            <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><rect x="8" y="2" width="8" height="7" fill="#008080"/><rect x="9" y="3" width="6" height="2" fill="#00AAAA"/><rect x="4" y="11" width="16" height="11" fill="#C0C0C0"/><rect x="4" y="11" width="16" height="2" fill="#DFDFDF"/><rect x="4" y="11" width="2" height="11" fill="#DFDFDF"/><rect x="18" y="11" width="2" height="11" fill="#808080"/><rect x="4" y="20" width="16" height="2" fill="#808080"/></svg>
-          </div>
-          <span>About Me</span>
-        </a>
-        <a href="#experience" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-            <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><rect x="8" y="3" width="8" height="3" fill="#808080"/><rect x="9" y="3" width="6" height="2" fill="#C0C0C0"/><rect x="2" y="6" width="20" height="14" fill="#FFCC00"/><rect x="2" y="6" width="20" height="2" fill="#FFE066"/><rect x="2" y="6" width="2" height="14" fill="#FFE066"/><rect x="20" y="6" width="2" height="14" fill="#AA8800"/><rect x="2" y="18" width="20" height="2" fill="#AA8800"/><rect x="2" y="12" width="20" height="2" fill="#AA8800"/><rect x="10" y="10" width="4" height="4" fill="#C0C0C0"/></svg>
-          </div>
-          <span>Experience</span>
-        </a>
-        <a href="#projects" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-            <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><rect x="1" y="7" width="8" height="3" fill="#FFCC00"/><rect x="1" y="9" width="22" height="13" fill="#FFCC00"/><rect x="1" y="9" width="22" height="2" fill="#FFE566"/><rect x="1" y="9" width="2" height="13" fill="#FFE566"/><rect x="21" y="9" width="2" height="13" fill="#AA8800"/><rect x="1" y="20" width="22" height="2" fill="#AA8800"/></svg>
-          </div>
-          <span>Projects</span>
-        </a>
-        <a href="#education" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-            <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><polygon points="12,3 22,8 12,13 2,8" fill="#008080"/><polygon points="12,3 22,8 12,13 2,8" fill="none" stroke="#00AAAA" stroke-width="1"/><rect x="19" y="8" width="2" height="7" fill="#808080"/><rect x="18" y="15" width="3" height="2" fill="#808080"/><rect x="7" y="13" width="10" height="6" fill="#008080"/><rect x="7" y="13" width="10" height="2" fill="#00AAAA"/></svg>
-          </div>
-          <span>Education</span>
-        </a>
-        <a href="#skills" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-             <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><rect x="9" y="1" width="6" height="4" fill="#008080"/><rect x="9" y="19" width="6" height="4" fill="#008080"/><rect x="1" y="9" width="4" height="6" fill="#008080"/><rect x="19" y="9" width="4" height="6" fill="#008080"/><rect x="5" y="5" width="14" height="14" fill="#008080"/><rect x="5" y="5" width="14" height="2" fill="#00AAAA"/><rect x="5" y="5" width="2" height="14" fill="#00AAAA"/><rect x="17" y="5" width="2" height="14" fill="#005555"/><rect x="5" y="17" width="14" height="2" fill="#005555"/><rect x="8" y="8" width="8" height="8" fill="#C0C0C0"/><rect x="8" y="8" width="8" height="2" fill="#DFDFDF"/></svg>
-          </div>
-          <span>Skills</span>
-        </a>
-        <a href="#achievements" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-            <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><rect x="7" y="2" width="10" height="9" fill="#FFCC00"/><rect x="7" y="2" width="10" height="2" fill="#FFE566"/><rect x="7" y="2" width="2" height="9" fill="#FFE566"/><rect x="15" y="2" width="2" height="9" fill="#AA8800"/><rect x="3" y="2" width="4" height="6" fill="#FFCC00"/><rect x="17" y="2" width="4" height="6" fill="#FFCC00"/><rect x="10" y="11" width="4" height="4" fill="#C0C0C0"/><rect x="6" y="15" width="12" height="3" fill="#C0C0C0"/><rect x="6" y="15" width="12" height="1" fill="#DFDFDF"/></svg>
-          </div>
-          <span>Achievements</span>
-        </a>
-        <a href="#certifications" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px;">
-          <div style="width: 20px; height: 20px; flex-shrink: 0;">
-            <svg viewBox="0 0 24 24" width="20" height="20" style="image-rendering: pixelated;"><rect x="3" y="1" width="14" height="22" fill="#FFFFFF"/><rect x="3" y="1" width="14" height="1" fill="#DFDFDF"/><rect x="3" y="1" width="1" height="22" fill="#DFDFDF"/><rect x="15" y="1" width="2" height="22" fill="#808080"/><rect x="3" y="21" width="14" height="2" fill="#808080"/><rect x="13" y="1" width="4" height="4" fill="#C0C0C0"/><rect x="13" y="1" width="1" height="4" fill="#808080"/><rect x="13" y="4" width="4" height="1" fill="#808080"/><rect x="6" y="7" width="8" height="1" fill="#000080"/><rect x="6" y="10" width="7" height="1" fill="#000080"/><rect x="6" y="13" width="8" height="1" fill="#000080"/><rect x="6" y="16" width="5" height="1" fill="#000080"/></svg>
-          </div>
-          <span>Certifications</span>
-        </a>
-
-        <div style="border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 4px 0;"></div>
-
-        <a href="https://www.facebook.com/gein3ru" target="_blank" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px; font-weight: bold;">
-          <svg viewBox="0 0 32 32" width="20" height="20" style="image-rendering: pixelated; flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" fill="#1877F2"/><rect x="18" y="8" width="6" height="3" fill="#FFFFFF"/><rect x="14" y="7" width="4" height="18" fill="#FFFFFF"/><rect x="14" y="16" width="8" height="3" fill="#FFFFFF"/></svg>
-          Facebook
-        </a>
-        <a href="https://www.instagram.com/_geineru/" target="_blank" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px; font-weight: bold;">
-          <svg viewBox="0 0 32 32" width="20" height="20" style="image-rendering: pixelated; flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" fill="#E1306C"/><rect x="8" y="8" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2"/><rect x="12" y="12" width="8" height="8" fill="none" stroke="#FFFFFF" stroke-width="2"/><rect x="20" y="6" width="4" height="4" fill="#FFFFFF"/></svg>
-          Instagram
-        </a>
-        <a href="https://www.linkedin.com/in/geineldungao/" target="_blank" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; text-decoration: none; color: var(--win-black); border-bottom: 1px solid var(--win-gray-light); font-size: 11px; font-weight: bold;">
-          <svg viewBox="0 0 32 32" width="20" height="20" style="image-rendering: pixelated; flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" fill="#0077B5"/><rect x="6" y="12" width="5" height="14" fill="#FFFFFF"/><rect x="6" y="6" width="5" height="5" fill="#FFFFFF"/><rect x="14" y="12" width="5" height="14" fill="#FFFFFF"/><rect x="14" y="14" width="8" height="5" fill="#FFFFFF"/><rect x="19" y="12" width="5" height="5" fill="#FFFFFF"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://github.com/wolfsenberg" target="_blank" class="start-menu-link" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; text-decoration: none; color: var(--win-black); font-size: 11px; font-weight: bold;">
-          <svg viewBox="0 0 32 32" width="20" height="20" style="image-rendering: pixelated; flex-shrink: 0;"><rect x="2" y="2" width="28" height="28" fill="#24292E"/><rect x="9" y="6" width="14" height="2" fill="#FFFFFF"/><rect x="6" y="8" width="20" height="2" fill="#FFFFFF"/><rect x="5" y="10" width="22" height="10" fill="#FFFFFF"/><rect x="6" y="20" width="8" height="6" fill="#FFFFFF"/><rect x="18" y="20" width="8" height="6" fill="#FFFFFF"/><rect x="13" y="22" width="6" height="4" fill="#24292E"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Win97 Ticker -->
-  <div style="position: fixed; top: 0; left: 0; right: 0; height: 20px; background: var(--win-gray); border-bottom: 2px solid; border-color: var(--win-3d-dark) var(--win-3d-light) var(--win-3d-light) var(--win-3d-dark); overflow: hidden; z-index: 200; display: flex; align-items: center;">
-    <div style="flex: 1; overflow: hidden; position: relative;">
-      <div style="display: inline-block; white-space: nowrap; font-size: 10px; animation: win-ticker 40s linear infinite; padding-left: 100%;">
-        Welcome to my portfolio ^___^ &nbsp;|&nbsp; Geinel Niño A. Dungao &nbsp;|&nbsp; IT Student &nbsp;|&nbsp; Full-Stack Web &amp; IoT Developer &nbsp;|&nbsp; Technical Project Manager @ AWSCCPUP &nbsp;|&nbsp; Creatives @ AWSUG e:Novators PH &nbsp;|&nbsp; Compliance Analyst, Cloud Solutions @ GDGPUP &nbsp;|&nbsp; 14°31′52″N 121°03′13″E &nbsp;|&nbsp; 14°35′50″N, 121°0′39″E &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Content Area -->
-  <main id="main-content" style="padding: 44px 20px 80px 100px; display: flex; flex-direction: column; gap: 20px; align-items: center;">
-    <div style="width: 100%; max-width: 860px; display: flex; flex-direction: column; gap: 20px;">
-
-      <!-- 1. ABOUT ME -->
-      <div id="home" class="win-window fade-in" style="scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>About Me — GEINEL NIÑO DUNGAO</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
-        <div class="win-menubar">
-          <div class="win-menu-item"><u>F</u>ile</div>
-          <div class="win-menu-item"><u>E</u>dit</div>
-          <div class="win-menu-item"><u>V</u>iew</div>
-          <div class="win-menu-item"><u>H</u>elp</div>
-        </div>
-        <div style="background: var(--win-white); margin: 8px; padding: 20px;">
-          <div style="padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--win-gray-light);">
-            <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 12px;">
-              <div style="width: 80px; height: 80px; flex-shrink: 0; border: 2px solid; border-color: var(--win-3d-dark) var(--win-3d-light) var(--win-3d-light) var(--win-3d-dark); overflow: hidden; background: var(--win-white);">
-                <img src="__ASSET_BASE_URL__/profile-frames/frame-000.webp" alt="Geinel Niño A. Dungao" width="80" height="80" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'" />
-              </div>
-              <div>
-                <h1 style="font-size: 22px; font-weight: bold; color: var(--win-blue); margin-bottom: 6px; line-height: 1.2;">
-                  GEINEL NIÑO A. DUNGAO
-                </h1>
-                <p style="font-size: 12px; margin-bottom: 4px; line-height: 1.5;">IT Student | Full-Stack Web & IoT Developer | Technical Project Manager @ AWSCCPUP | Creatives @ AWSUG e:Novators PH | Compliance Analyst, Cloud Solutions @ GDGPUP</p>
-                <p style="font-size: 11px; color: var(--win-gray-dark); font-style: italic;">// Welcome to my portfolio ^___^//</p>
-              </div>
-            </div>
-          </div>
-          <div style="border-left: 3px solid var(--win-blue); padding-left: 14px; margin-bottom: 20px; font-style: italic; font-size: 12px; line-height: 1.7; color: var(--win-gray-dark);">
-            "Being a generalist isn't a weakness—it's the reason I lead."
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 5px; font-size: 11px; margin-bottom: 20px; border-top: 1px solid var(--win-gray-light); padding-top: 14px;">
-            <div style="display: flex; gap: 8px;">
-              <span style="color: var(--win-gray-dark); width: 80px; flex-shrink: 0;">Username:</span>
-              <span style="font-weight: normal; color: inherit;">@wolfsenberg</span>
-            </div>
-            <div style="display: flex; gap: 8px;">
-              <span style="color: var(--win-gray-dark); width: 80px; flex-shrink: 0;">Location:</span>
-              <span style="font-weight: normal; color: inherit;">Southside, Taguig City | PUP Manila, Philippines</span>
-            </div>
-            <div style="display: flex; gap: 8px;">
-              <span style="color: var(--win-gray-dark); width: 80px; flex-shrink: 0;">Status:</span>
-              <span style="font-weight: bold; color: var(--win-blue);">Available for Opportunities</span>
-            </div>
-          </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="https://www.facebook.com/gein3ru" target="_blank" rel="noopener noreferrer" class="win-button" style="text-decoration: none; color: var(--win-black); font-size: 11px; padding: 5px 14px;">Facebook</a>
-            <a href="https://www.instagram.com/_geineru/" target="_blank" rel="noopener noreferrer" class="win-button" style="text-decoration: none; color: var(--win-black); font-size: 11px; padding: 5px 14px;">Instagram</a>
-            <a href="https://www.linkedin.com/in/geineldungao/" target="_blank" rel="noopener noreferrer" class="win-button" style="text-decoration: none; color: var(--win-black); font-size: 11px; padding: 5px 14px;">LinkedIn</a>
-            <a href="https://github.com/wolfsenberg" target="_blank" rel="noopener noreferrer" class="win-button" style="text-decoration: none; color: var(--win-black); font-size: 11px; padding: 5px 14px;">GitHub</a>
-          </div>
-        </div>
-        <div class="win-statusbar">
-          <div class="win-statusbar-field" style="font-size: 10px;">Ready</div>
-          <div class="win-statusbar-field" style="flex: 0; min-width: 110px; font-size: 10px;">IT Student</div>
-        </div>
+  <main>
+    <section id="home" class="hero section-shell">
+      <div class="hero-index">
+        <span>01 / Identity</span>
+        <span>14.53305&deg; N, 121.05243&deg; E / Taguig, Philippines</span>
+        <span>Full-Stack / IoT / Cloud</span>
       </div>
 
-      <!-- 2. EXPERIENCE -->
-      <div id="experience" class="win-window fade-in" style="max-width: 860px; width: 100%; margin: 0 auto; scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>Experience</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
-        <div style="background: var(--win-white); margin: 8px;">
-          
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">Cornersteel Systems Corporation</div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-blue); font-size: 11px;">
-              <span style="font-weight: bold;">Full-Stack Web & IoT Developer Intern</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2026 - Present</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-gray-light); font-size: 11px;">
-              <span style="font-weight: normal;">IoT Developer Intern</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2025</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-          
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">AWS Cloud Club PUP</div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-blue); font-size: 11px;">
-              <span style="font-weight: bold;">Technical Project Manager - DevTeam</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2025 - Present</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-gray-light); font-size: 11px;">
-              <span style="font-weight: normal;">Member - Cloud Computing and Infrastructure Team</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2024 - Present</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-gray-light); font-size: 11px;">
-              <span style="font-weight: normal;">Logistics - Operations Team</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2024 - 2025</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-          
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">AWS User Group e:Novators Philippines</div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-blue); font-size: 11px;">
-              <span style="font-weight: bold;">Creatives - Office of Creative Services</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2025 - Present</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">Google Developer Groups on Campus PUP</div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-blue); font-size: 11px;">
-              <span style="font-weight: bold;">Cloud Solutions Team - Compliance Analyst</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2025 - Present</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-gray-light); font-size: 11px;">
-              <span style="font-weight: normal;">Cloud Solutions Team - Curriculum Analyst</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2024 - 2025</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">PUP Manila Microsoft Student Community</div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-blue); font-size: 11px;">
-              <span style="font-weight: bold;">Member - Cloud Computing Department</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2024 - Present</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">Taguig Robotics Team</div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 0 3px 12px; margin-bottom: 2px; border-left: 3px solid var(--win-blue); font-size: 11px;">
-              <span style="font-weight: bold;">Robotics Competitor & Researcher</span>
-              <span style="color: var(--win-gray-dark); white-space: nowrap; font-size: 10px; flex-shrink: 0;">2017 - 2020</span>
-            </div>
-          </div>
-
-        </div>
-        <div class="win-statusbar">
-          <div class="win-statusbar-field" style="font-size: 10px;">6 organizations  |  10 roles</div>
-        </div>
+      <div class="hero-title-block">
+        <p class="section-kicker">I started with robotics, then kept following the problems: web systems, IoT, cloud, networking, and community-built platforms.</p>
+        <h1 class="display-title">
+          Geinel Ni&ntilde;o A.
+          <span>Dungao</span>
+        </h1>
+        <p class="hero-role-line">IT Student at PUP | CTO at Seekers Guild | Full-Stack Web &amp; IoT Developer | Technical Project Manager at AWS Cloud Club PUP | Creatives at AWSUG e:Novators PH | Compliance Analyst, Cloud Solutions at GDG PUP</p>
+        <button id="cv-open-button" class="cv-open-button" type="button" aria-haspopup="dialog" aria-controls="cv-viewer">Open Curriculum Vitae</button>
       </div>
 
-      <!-- 3. PROJECTS -->
-      <div id="projects" class="win-window fade-in" style="max-width: 860px; width: 100%; margin: 0 auto; scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>Projects</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
+      <figure class="hero-portrait">
+        <img src="__ASSET_BASE_URL__/profile-frames/geinel_longhair.webp" alt="Geinel Ni&ntilde;o A. Dungao" width="420" height="420" decoding="async">
+        <figcaption>“Being a generalist isn't a weakness—it's the reason I lead.”</figcaption>
+      </figure>
 
-        <div style="display: flex; padding: 6px 8px 0; background: var(--win-gray); border-bottom: 2px solid var(--win-3d-dark);">
-          <button id="tab-technical" style="padding: 4px 16px; font-size: 11px; font-weight: bold; font-family: inherit; cursor: pointer; background: var(--win-gray); color: var(--win-black); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-gray) var(--win-3d-light); position: relative; top: 2px; margin-right: 2px; z-index: 1;">Technical Projects</button>
-          <button id="tab-graphic" style="padding: 4px 16px; font-size: 11px; font-weight: bold; font-family: inherit; cursor: pointer; background: var(--win-gray-light); color: var(--win-black); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); position: relative; top: 0; margin-right: 2px; z-index: 0;">Graphic Projects</button>
-        </div>
+      <ul class="hero-contact meta-list" aria-label="Contact information">
+        <li><span>Phone</span><strong>09288518944</strong></li>
+        <li><span>Email</span><strong><a href="mailto:geineldungao012@gmail.com">geineldungao012@gmail.com</a></strong></li>
+        <li><span>LinkedIn</span><strong><a href="https://www.linkedin.com/in/geineldungao/" target="_blank" rel="noopener noreferrer">linkedin.com/in/geineldungao/</a></strong></li>
+        <li><span>GitHub</span><strong><a href="https://github.com/wolfsenberg" target="_blank" rel="noopener noreferrer">github.com/wolfsenberg</a></strong></li>
+      </ul>
 
-        <div style="background: var(--win-white); margin: 8px;">
-          <!-- Technical Tab Content -->
-          <div id="content-technical" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; padding: 16px;">
-          </div>
-          
-          <!-- Graphic Tab Content -->
-          <div id="content-graphic" style="display: none; padding: 16px;">
-            <div class="win-image-frame" data-win-image-frame style="width: 100%;">
-              <img data-win-loader src="__ASSET_BASE_URL__/gallery/photo-portfolio.webp" alt="Graphic Design Portfolio" width="1571" height="2403" loading="lazy" decoding="async" style="width: 100%; height: auto;" onerror="this.style.display='none'" />
-              <div class="win-image-loader" role="status" aria-live="polite">
-                <div class="win-image-loader-window">
-                  <div class="win-image-loader-titlebar">
-                    <span>Loading Image</span>
-                    <span>?</span>
-                  </div>
-                  <div class="win-image-loader-body">
-                    Please wait...
-                    <div class="win-progress win-progress--indeterminate" aria-hidden="true">
-                      <span class="win-progress-bar"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div style="font-size: 12px; font-style: italic; color: var(--win-gray-dark); margin-top: 10px;"></div>
-          </div>
-        </div>
+      <dl class="hero-ledger" aria-label="Profile counts">
+        <div><dt>03</dt><dd>Technical roles</dd></div>
+        <div><dt>15</dt><dd>Documented projects</dd></div>
+        <div><dt>09</dt><dd>Leadership roles</dd></div>
+        <div><dt>02</dt><dd>TESDA certificates</dd></div>
+      </dl>
+    </section>
 
-        <div class="win-statusbar">
-          <div id="status-tab-info" class="win-statusbar-field" style="font-size: 10px;">13 projects — click any folder to view details</div>
-        </div>
+    <section id="experience" class="section-shell experience-section">
+      <div class="section-index">
+        <span>02</span>
+        <p>Professional Experience</p>
       </div>
-
-      <!-- 4. EDUCATION -->
-      <div id="education" class="win-window fade-in" style="max-width: 860px; width: 100%; margin: 0 auto; scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>Education</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
-        <div style="background: var(--win-white); margin: 8px;">
-          
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">Polytechnic University of the Philippines (Sta. Mesa)</div>
-            <div style="padding: 4px 0 4px 12px; border-left: 3px solid var(--win-gray-light); font-size: 11px; margin-bottom: 4px;">
-              <div style="font-weight: bold; margin-bottom: 2px;">College — Information Technology</div>
-              <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                <span></span>
-                <span style="color: var(--win-gray-dark); font-size: 10px; margin-left: auto; white-space: nowrap;">2023 - Present</span>
-              </div>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">Sen. Renato "Compañero" Cayetano Memorial Science and Technology High School</div>
-            <div style="padding: 4px 0 4px 12px; border-left: 3px solid var(--win-gray-light); font-size: 11px; margin-bottom: 4px;">
-              <div style="font-weight: bold; margin-bottom: 2px;">Senior High School — Science, Technology, Engineering, and Mathematics (STEM)</div>
-              <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                <span style="color: var(--win-blue); font-size: 10px;">★ Graduated with High Honors</span>
-                <span style="color: var(--win-gray-dark); font-size: 10px; margin-left: auto; white-space: nowrap;">2021 - 2023</span>
-              </div>
-            </div>
-            <div style="padding: 4px 0 4px 12px; border-left: 3px solid var(--win-gray-light); font-size: 11px; margin-bottom: 4px;">
-              <div style="font-weight: bold; margin-bottom: 2px;">Junior High School</div>
-              <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                <span style="color: var(--win-blue); font-size: 10px;">★ Graduated with Honors</span>
-                <span style="color: var(--win-gray-dark); font-size: 10px; margin-left: auto; white-space: nowrap;">2017 - 2021</span>
-              </div>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; margin-bottom: 8px;">Rizal Elementary School</div>
-            <div style="padding: 4px 0 4px 12px; border-left: 3px solid var(--win-gray-light); font-size: 11px; margin-bottom: 4px;">
-              <div style="font-weight: bold; margin-bottom: 2px;">Elementary</div>
-              <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                <span style="color: var(--win-blue); font-size: 10px;">★ Graduated with Honors</span>
-                <span style="color: var(--win-gray-dark); font-size: 10px; margin-left: auto; white-space: nowrap;">2011 - 2017</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="win-statusbar">
-          <div class="win-statusbar-field" style="font-size: 10px;">3 institutions</div>
-        </div>
+      <div class="section-lead">
+        <h2>Technical Experience.</h2>
+        <p>Web systems, IoT integrations, technical planning, and the small decisions that make things usable.</p>
       </div>
-
-      <!-- 5. SKILLS -->
-      <div id="skills" class="win-window fade-in" style="max-width: 860px; width: 100%; margin: 0 auto; scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>Skills</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
-        <div style="background: var(--win-white); margin: 8px;">
-          
-          <div style="display: flex; align-items: flex-start;">
-            <div style="width: 130px; flex-shrink: 0; padding: 10px 12px; font-weight: bold; font-size: 11px; background: #F5F5F5; border-right: 1px solid var(--win-gray-light); align-self: stretch; display: flex; align-items: center;">Technical & Programming</div>
-            <div style="padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 5px; flex: 1;">
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Arduino</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">C</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">C++</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Java</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Python</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">HTML</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">CSS</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">JavaScript</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">SQL</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Laravel</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Tailwind CSS</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Google Apps Script</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Prompt Engineering</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Robotics (Hardware & Software)</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Research</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="display: flex; align-items: flex-start;">
-            <div style="width: 130px; flex-shrink: 0; padding: 10px 12px; font-weight: bold; font-size: 11px; background: #F5F5F5; border-right: 1px solid var(--win-gray-light); align-self: stretch; display: flex; align-items: center;">IT & Networking</div>
-            <div style="padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 5px; flex: 1;">
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Project Management</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">AWS Cloud Concepts</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Network Administration</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Windows Server</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Computer Networking</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Hardware Assembly</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Installation</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Maintenance</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Troubleshooting</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="display: flex; align-items: flex-start;">
-            <div style="width: 130px; flex-shrink: 0; padding: 10px 12px; font-weight: bold; font-size: 11px; background: #F5F5F5; border-right: 1px solid var(--win-gray-light); align-self: stretch; display: flex; align-items: center;">Multimedia & Design</div>
-            <div style="padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 5px; flex: 1;">
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Photography</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Videography</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Photo Editing</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Video Editing</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="display: flex; align-items: flex-start;">
-            <div style="width: 130px; flex-shrink: 0; padding: 10px 12px; font-weight: bold; font-size: 11px; background: #F5F5F5; border-right: 1px solid var(--win-gray-light); align-self: stretch; display: flex; align-items: center;">Social Media & Communication</div>
-            <div style="padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 5px; flex: 1;">
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Social Media Management</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Content Strategy</span>
-            </div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="display: flex; align-items: flex-start;">
-            <div style="width: 130px; flex-shrink: 0; padding: 10px 12px; font-weight: bold; font-size: 11px; background: #F5F5F5; border-right: 1px solid var(--win-gray-light); align-self: stretch; display: flex; align-items: center;">Languages</div>
-            <div style="padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 5px; flex: 1;">
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">English</span>
-              <span style="font-size: 10px; padding: 2px 8px; background: var(--win-gray-light); border: 1px solid var(--win-gray-dark); cursor: default;">Filipino</span>
-            </div>
-          </div>
-
-        </div>
-        <div class="win-statusbar">
-          <div class="win-statusbar-field" style="font-size: 10px;">32 skills across 5 categories</div>
-        </div>
+      <div class="timeline role-log" data-audit="professional-experience">
+        <article>
+          <span>2026</span>
+          <h3>Chief Technology Officer</h3>
+          <p>Seekers Guild</p>
+          <small>Lead technical direction for digital initiatives, helping align architecture, development priorities, and implementation decisions.</small>
+        </article>
+        <article>
+          <span>2026</span>
+          <h3>Full-Stack Web & IoT Developer Intern</h3>
+          <p>Cornersteel Systems Corporation</p>
+          <small>Build and integrate web applications with IoT systems, connecting frontend, backend, databases, and device workflows for RFID-based monitoring and access control.</small>
+        </article>
+        <article>
+          <span>2025</span>
+          <h3>IoT Developer Intern</h3>
+          <p>Cornersteel Systems Corporation</p>
+          <small>Developed an Arduino-Python LiDAR prototype for real-time surrounding mapping, object detection, and live visualization of sensor data.</small>
+        </article>
       </div>
+    </section>
 
-      <!-- 6. ACHIEVEMENTS -->
-      <div id="achievements" class="win-window fade-in" style="max-width: 860px; width: 100%; margin: 0 auto; scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>Achievements & Awards</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
-        <div style="background: var(--win-white); margin: 8px;">
-          
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2026</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">2nd Place — Google Developer Groups PUP: Build with AI Mini Hackathon</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">2nd Place — Zero to Agent Manila: Mini Hackathon</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Top Builder — Build on Stellar Bootcamp Philippines</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">3rd Place — Arduino Day Philippines 2026: ArduInnovathon</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2025</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Finished second year with a GPA of 1.22 — Information Technology, Polytechnic University of the Philippines</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2024</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Finished first year with a GPA of 1.19 — Information Technology, Polytechnic University of the Philippines</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2023</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Graduated with High Honors — Senior High School, Sen. Renato "Compañero" Cayetano Memorial Science and Technology High School</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2021</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Graduated with Honors — Junior High School, Sen. Renato "Compañero" Cayetano Memorial Science and Technology High School</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2019</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Participant — DOST Tagisang Robotics: Design, Build and Play 2019</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">4th Place — Division Science and Technology Fair 2019 - Science Innovation Expo (Team Category)</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Participant — 1st Filipino Ideas Expo</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Participant — 18th Philippine Robotics Olympiad - Lego</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">2nd Place — International Robot Olympiad Preliminary 2019 - Robot in Movie (Senior Category)</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">3rd Place — FIRA Roboworldcup Philippine Open - Robot Rugby (U19)</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">1st Place — Summer Sumo Games and Youth Robotics Competition - Robot in Movie (Senior Category)</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2018</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">2nd Place — International Robot Olympiad Pre-Event (Intelligent Machines Contest) 2018 - Robot Farming</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Participant — RobOlympix 2018 - Puck Collect Challenge</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">2nd Place — MIBF - Manufacturing Technology World - Robotics Competition - Color Sorting</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">3rd Place — Summer Sumo Games and Youth Robotics Competition - Robot in Movie (Senior Category)</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Participant — International Robot Olympiad 2018 - Robot in Movie (Senior Category)</div>
-          </div>
-          <div style="height: 0; border-top: 1px solid var(--win-3d-dark); border-bottom: 1px solid var(--win-3d-light); margin: 0;"></div>
-
-          <div style="padding: 12px 16px;">
-            <div style="font-weight: bold; font-size: 12px; color: var(--win-blue); margin-bottom: 8px;">2017</div>
-            <div style="font-size: 11px; padding: 3px 0 3px 12px; border-left: 3px solid var(--win-gray-light); margin-bottom: 4px; line-height: 1.5;">Graduated with Honors — Elementary, Rizal Elementary School</div>
-          </div>
-
-        </div>
-        <div class="win-statusbar">
-          <div class="win-statusbar-field" style="font-size: 10px;">21 notable achievements across 8 years</div>
-        </div>
+    <section id="projects" class="section-shell featured-section">
+      <div class="section-index">
+        <span>03</span>
+        <p>Projects</p>
       </div>
-
-      <!-- 7. CERTIFICATIONS -->
-      <div id="certifications" class="win-window fade-in" style="max-width: 860px; width: 100%; margin: 0 auto; scroll-margin-top: 8px;">
-        <div class="win-titlebar">
-          <span>Certifications</span>
-          <div style="display: flex; gap: 2px;">
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">_</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 7px;">□</button>
-            <button class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px;">x</button>
-          </div>
-        </div>
-        <div style="background: var(--win-white); margin: 8px; padding: 16px;">
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px;">
-            
-            <div style="border: 1px solid var(--win-gray-light); padding: 16px;">
-              <div style="background: var(--win-blue); color: var(--win-white); padding: 4px 10px; margin-bottom: 12px; font-size: 10px; font-weight: bold; text-align: center; letter-spacing: 0.06em;">TESDA NATIONAL CERTIFICATION</div>
-              <div style="font-weight: bold; font-size: 12px; margin-bottom: 10px; line-height: 1.4;">National Certificate III in Visual Graphic Design</div>
-              <div style="font-size: 11px; color: var(--win-gray-dark); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--win-gray-light);">TESDA: Technical Education and Skills Development Authority</div>
-              <div style="font-size: 10px; color: var(--win-gray-dark); font-family: monospace;">ID: 25130603070903</div>
-            </div>
-
-            <div style="border: 1px solid var(--win-gray-light); padding: 16px;">
-              <div style="background: var(--win-blue); color: var(--win-white); padding: 4px 10px; margin-bottom: 12px; font-size: 10px; font-weight: bold; text-align: center; letter-spacing: 0.06em;">TESDA NATIONAL CERTIFICATION</div>
-              <div style="font-weight: bold; font-size: 12px; margin-bottom: 10px; line-height: 1.4;">National Certificate II in Computer Systems Servicing</div>
-              <div style="font-size: 11px; color: var(--win-gray-dark); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--win-gray-light);">TESDA: Technical Education and Skills Development Authority</div>
-              <div style="font-size: 10px; color: var(--win-gray-dark); font-family: monospace;">ID: 24131402021182</div>
-            </div>
-
-          </div>
-        </div>
-        <div class="win-statusbar">
-          <div class="win-statusbar-field" style="font-size: 10px;">2 certifications — TESDA</div>
-          <div class="win-statusbar-field" style="flex: 0; min-width: 60px; font-size: 10px; text-align: center;">Verified</div>
-        </div>
+      <div class="section-lead">
+        <h2>Some things I built.</h2>
+        <p>Web platforms, IoT systems, community tools, and early Arduino builds. The range got bigger than planned.</p>
       </div>
+      <div id="featured-projects" class="featured-grid" data-audit="projects"></div>
+      <div class="creative-projects-block" aria-labelledby="creative-projects-title">
+        <div class="creative-projects-index">
+          <span>03</span>
+          <p>Creative Work</p>
+        </div>
+        <div class="creative-projects-lead">
+          <h3 id="creative-projects-title">Photo edits and visual work.</h3>
+          <p>Not a software system, but still part of the work: event visuals, edits, layouts, and the multimedia side I keep building alongside the technical projects.</p>
+        </div>
+        <div id="creative-projects" class="creative-projects-list"></div>
+      </div>
+    </section>
 
-    </div>
+    <section id="leadership" class="section-shell leadership-section">
+      <div class="section-index">
+        <span>04</span>
+        <p>Leadership & Activities</p>
+      </div>
+      <div class="section-lead">
+        <h2>Leadership and community work.</h2>
+        <p>Coordination, reviews, events, learning materials, and team support across student tech communities. The quieter work, mostly.</p>
+      </div>
+      <div class="timeline role-log" data-audit="leadership-activities">
+        <article>
+          <span>2025 - Present</span>
+          <h3>Technical Project Manager - Development Team</h3>
+          <p>AWS Cloud Club PUP</p>
+          <small>Coordinate development initiatives, task ownership, delivery timelines, and cross-team execution for community-driven digital projects.</small>
+        </article>
+        <article>
+          <span>2024 - Present</span>
+          <h3>Cloud Computing & Infrastructure Team</h3>
+          <p>AWS Cloud Club PUP</p>
+          <small>Contribute to cloud and infrastructure initiatives, technical learning activities, and AWS-focused implementation work for student builders.</small>
+        </article>
+        <article>
+          <span>2024 - 2025</span>
+          <h3>Logistics - Operations Team</h3>
+          <p>AWS Cloud Club PUP</p>
+          <small>Supported event logistics, operations planning, and on-ground execution for community programs and technical events.</small>
+        </article>
+        <article>
+          <span>2026</span>
+          <h3>Frontend Quality Analyst</h3>
+          <p>Google Developer Groups on Campus PUP</p>
+          <small>Review frontend implementations for functionality, responsiveness, visual consistency, and alignment with product and design requirements.</small>
+        </article>
+        <article>
+          <span>2025 - Present</span>
+          <h3>Cloud Solutions Team - Compliance Analyst</h3>
+          <p>Google Developer Groups on Campus PUP</p>
+          <small>Review cloud-related project outputs and documentation against team standards, implementation requirements, and delivery criteria.</small>
+        </article>
+        <article>
+          <span>2024 - 2025</span>
+          <h3>Cloud Solutions Team - Curriculum Analyst</h3>
+          <p>Google Developer Groups on Campus PUP</p>
+          <small>Reviewed and organized cloud-focused learning materials and technical curriculum for student developers.</small>
+        </article>
+        <article>
+          <span>2025 - Present</span>
+          <h3>Creatives - Office of Creative Services</h3>
+          <p>AWS User Group e:Novators Philippines</p>
+          <small>Support visual and multimedia production for community programs, technical events, and developer-focused communications.</small>
+        </article>
+        <article>
+          <span>2024 - Present</span>
+          <h3>Cloud Computing Department</h3>
+          <p>PUP Manila Microsoft Student Community</p>
+          <small>Contribute to cloud-focused technical activities, community learning, and knowledge-sharing initiatives.</small>
+        </article>
+        <article>
+          <span>2017 - 2020</span>
+          <h3>Robotics Competitor & Researcher</h3>
+          <p>Taguig Robotics Team</p>
+          <small>Designed, built, tested, and researched robotics systems for local and international competitions across hardware and programming tasks.</small>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section-shell skills-section">
+      <div class="section-index">
+        <span>05</span>
+        <p>Technical Skills</p>
+      </div>
+      <div class="stack-headline">
+        <h2>Tools / skills.</h2>
+        <p>The stack changes per project, but this is the toolkit I keep reaching for.</p>
+      </div>
+      <div class="skill-groups" data-audit="technical-skills">
+        <article>
+          <span>01 / Programming & Web</span>
+          <h3>Programming & Web</h3>
+          <p>C / C++ / Python / TypeScript / SQL / HTML / CSS / Laravel / Tailwind / Google Apps Script</p>
+        </article>
+        <article>
+          <span>02 / Cloud, DevOps & Networking</span>
+          <h3>Cloud, DevOps & Networking</h3>
+          <p>AWS Cloud Concepts / Docker / MQTT / Windows Server / Network Administration / Computer Networking</p>
+        </article>
+        <article>
+          <span>03 / IoT & Hardware</span>
+          <h3>IoT & Hardware</h3>
+          <p>Arduino / Robotics / Hardware Assembly / Installation / Maintenance / Troubleshooting</p>
+        </article>
+        <article>
+          <span>04 / Project & Research</span>
+          <h3>Project & Research</h3>
+          <p>Project Management / Prompt Engineering / Research</p>
+        </article>
+        <article>
+          <span>05 / Multimedia & Communication</span>
+          <h3>Multimedia & Communication</h3>
+          <p>Photography / Videography / Photo Editing / Video Editing / Social Media Management / Content Strategy</p>
+        </article>
+        <article>
+          <span>06 / Languages</span>
+          <h3>Languages</h3>
+          <p>Fluent in English and Filipino</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="awards" class="section-shell awards-section">
+      <div class="section-index">
+        <span>06</span>
+        <p>Awards, Honors & Distinctions</p>
+      </div>
+      <div class="section-lead">
+        <h2>Awards, sorted by year.</h2>
+        <p>Robotics, academics, hackathons, and other places where the work had to hold up.</p>
+      </div>
+      <div class="award-ledger" data-audit="awards">
+        <article>
+          <h3>2026</h3>
+          <ul>
+            <li><strong>2nd Place</strong><span>Zero to Agent: Manila, Vercel Mini Hackathon</span></li>
+            <li><strong>2nd Place</strong><span>GDG PUP Build with AI Hackathon 2026</span></li>
+            <li><strong>3rd Place</strong><span>Arduino Day Philippines 2026: Arduinnovation</span></li>
+            <li><strong>Top 5</strong><span>Stellar Bootcamp, April 2026</span></li>
+            <li><strong>Top 6</strong><span>Build on Stellar Philippines Hackathon 2026</span></li>
+            <li><strong>Top Monthly Builder</strong><span>Stellar Journey to Mastery: Monthly Builder Challenges</span></li>
+            <li><strong>Participant</strong><span>Rise In APAC Stellar Hackathon</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>2025</h3>
+          <ul>
+            <li><strong>Academic Distinction</strong><span>Completed second year with a GPA of 1.22 - Diploma in Information Technology, Polytechnic University of the Philippines</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>2024</h3>
+          <ul>
+            <li><strong>Academic Distinction</strong><span>Completed first year with a GPA of 1.19 - Diploma in Information Technology, Polytechnic University of the Philippines</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>2023</h3>
+          <ul>
+            <li><strong>High Honors</strong><span>Graduated with High Honors - Senior High School, Sen. Renato "Compa&ntilde;ero" Cayetano Memorial Science and Technology High School</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>2021</h3>
+          <ul>
+            <li><strong>Honors</strong><span>Graduated with Honors - Junior High School, Sen. Renato "Compa&ntilde;ero" Cayetano Memorial Science and Technology High School</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>2019</h3>
+          <ul>
+            <li><strong>1st Place</strong><span>Summer Sumo Games and Youth Robotics Competition - Robot in Movie (Senior Category)</span></li>
+            <li><strong>2nd Place</strong><span>International Robot Olympiad Preliminary 2019 - Robot in Movie (Senior Category)</span></li>
+            <li><strong>3rd Place</strong><span>FIRA Roboworldcup Philippine Open - Robot Rugby (U19)</span></li>
+            <li><strong>4th Place</strong><span>Division Science and Technology Fair 2019 - Science Innovation Expo (Team Category)</span></li>
+            <li><strong>Participant</strong><span>DOST Tagisang Robotics: Design, Build and Play 2019</span></li>
+            <li><strong>Participant</strong><span>1st Filipino Ideas Expo</span></li>
+            <li><strong>Participant</strong><span>18th Philippine Robotics Olympiad - Lego</span></li>
+          </ul>
+        </article>
+        <article>
+          <h3>2018</h3>
+          <ul>
+            <li><strong>2nd Place</strong><span>International Robot Olympiad Pre-Event (Intelligent Machines Contest) 2018 - Robot Farming</span></li>
+            <li><strong>2nd Place</strong><span>MIBF - Manufacturing Technology World - Robotics Competition - Color Sorting</span></li>
+            <li><strong>3rd Place</strong><span>Summer Sumo Games and Youth Robotics Competition - Robot in Movie (Senior Category)</span></li>
+            <li><strong>Participant</strong><span>RobOlympix 2018 - Puck Collect Challenge</span></li>
+            <li><strong>Participant</strong><span>International Robot Olympiad 2018 - Robot in Movie (Senior Category)</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="certifications" class="section-shell certifications-section">
+      <div class="section-index">
+        <span>07</span>
+        <p>Certifications</p>
+      </div>
+      <div class="section-lead">
+        <h2>Certifications.</h2>
+        <p>Formal credentials for the creative and technical work I do.</p>
+      </div>
+      <div class="cert-list" data-audit="certifications">
+        <article>
+          <span>TESDA</span>
+          <h3>National Certificate III in Visual Graphic Design</h3>
+          <p>Technical Education and Skills Development Authority</p>
+        </article>
+        <article>
+          <span>TESDA</span>
+          <h3>National Certificate II in Computer Systems Servicing</h3>
+          <p>Technical Education and Skills Development Authority</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="education" class="section-shell education-section">
+      <div class="section-index">
+        <span>08</span>
+        <p>Education</p>
+      </div>
+      <div class="section-lead">
+        <h2>Education.</h2>
+        <p>Academic background, still in progress.</p>
+      </div>
+      <div class="education-list" data-audit="education">
+        <article>
+          <span>2023 - Present</span>
+          <h3>Polytechnic University of the Philippines - Sta. Mesa</h3>
+          <p>Diploma in Information Technology. Academic Standing: GPA 1.22 - Second Year, 2025; GPA 1.19 - First Year, 2024.</p>
+        </article>
+        <article>
+          <span>2021 - 2023</span>
+          <h3>Senator Renato "Compa&ntilde;ero" Cayetano Memorial Science and Technology High School</h3>
+          <p>Senior High School - Science, Technology, Engineering, and Mathematics (STEM). Academic Standing: Graduated with High Honors.</p>
+        </article>
+        <article>
+          <span>2017 - 2021</span>
+          <h3>Senator Renato "Compa&ntilde;ero" Cayetano Memorial Science and Technology High School</h3>
+          <p>Junior High School. Academic Standing: Graduated with Honors.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="field-notes" class="section-shell field-notes-section">
+      <div class="section-index">
+        <span>09</span>
+        <p>Active Record</p>
+      </div>
+      <div class="section-lead">
+        <h2>Active Record.</h2>
+        <p>Proof-of-work moments from builds, events, competitions, and communities. Not everything fits in a resume.</p>
+      </div>
+      <div id="field-notes-grid" class="field-notes-grid" data-audit="flex-images"></div>
+    </section>
+
+    <section id="contact" class="section-shell contact-section">
+      <div class="section-index">
+        <span>10</span>
+        <p>Contact</p>
+      </div>
+      <h2>Open to technical, web, IoT, community, and creative technology work.</h2>
+      <p>For collaborations, internships, engineering roles, technical community projects, or product-focused builds, you can reach me through email, LinkedIn, GitHub, or phone.</p>
+      <div class="contact-actions">
+        <a class="button button-light" href="mailto:geineldungao012@gmail.com">Email</a>
+        <a class="button button-light" href="https://www.linkedin.com/in/geineldungao/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="button button-light" href="https://github.com/wolfsenberg" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="button button-light" href="tel:+639288518944">Phone</a>
+      </div>
+    </section>
   </main>
 
-  <footer style="padding: 20px; text-align: center; font-size: 10px; color: var(--win-gray-dark); position: relative; z-index: 10;">
-    &copy; 2026 Geinel Niño A. Dungao. All rights reserved.
+  <footer class="site-footer">
+    <p>
+      Geinel Ni&ntilde;o A. Dungao /
+      <a href="https://www.linkedin.com/in/geineldungao/" target="_blank" rel="noopener noreferrer">LinkedIn</a> /
+      <a href="https://github.com/wolfsenberg" target="_blank" rel="noopener noreferrer">GitHub</a> /
+      <a href="mailto:geineldungao012@gmail.com">geineldungao012@gmail.com</a> /
+      09288518944
+    </p>
+    <a class="top-return" href="#home" aria-label="Back to top">
+      <span>Top</span>
+      <span aria-hidden="true">&uarr;</span>
+    </a>
   </footer>
-  <!-- Chat Tab (FB 2012 Style) -->
-  <div id="chat-tab" class="chat-tab" style="position: fixed; bottom: 32px; right: 20px; width: 220px; height: 28px; background: var(--win-gray); border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light); border-bottom: none; z-index: 8999; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font-weight: bold; font-size: 11px; max-width: calc(100vw - 40px);">
-    <div style="display: flex; align-items: center; gap: 6px;">
-      <div class="chat-status-dot" style="width: 8px; height: 8px; background: #00FF00; border: 1px solid var(--win-3d-dark);"></div>
-      <span class="chat-tab-text">Ask Geinel</span>
-      <span class="chat-tab-icon" style="display: none; font-size: 18px;">💬</span>
-    </div>
-    <div style="font-size: 9px;" id="chat-tab-arrow">▲</div>
-  </div>
 
-  <!-- Chatbot Window -->
-  <div id="chat-window" class="win-window" style="display: none; position: fixed; bottom: 60px; right: 20px; width: 260px; height: 320px; z-index: 9000; flex-direction: column; border-bottom: none; max-width: calc(100vw - 40px);">
-    <div class="win-titlebar" id="chat-titlebar" style="cursor: pointer;">
-      <span>Ask Geinel</span>
-      <div style="display: flex; gap: 2px;">
-        <button class="win-button" id="chat-close-btn" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 9px; pointer-events: auto;">_</button>
+  <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
+    <article class="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button id="modal-close-btn" class="modal-close" type="button" aria-label="Close project">Close</button>
+      <div class="modal-kicker">
+        <span id="modal-type-badge">Project</span>
+        <span id="modal-classification">Team Project</span>
+        <span id="modal-year">2026</span>
       </div>
-    </div>
-    <div style="flex: 1; display: flex; flex-direction: column; background: var(--win-gray); padding: 4px; overflow: hidden;">
-      <div id="chat-messages" class="win-inset" style="flex: 1; overflow-y: auto; background: var(--win-white); padding: 8px; margin-bottom: 4px; display: flex; flex-direction: column; gap: 8px;">
-        <div style="font-size: 11px;"><strong>Ask Geinel:</strong> Hello! Ask me anything about Geinel's portfolio, skills, or experience.</div>
-      </div>
-      <form id="chat-form" style="display: flex; gap: 4px;">
-        <input type="text" id="chat-input" class="win-inset" placeholder="Type a message..." style="flex: 1; padding: 4px; font-family: inherit; font-size: 11px; outline: none; border: 2px solid; border-color: var(--win-3d-dark) var(--win-3d-light) var(--win-3d-light) var(--win-3d-dark);" required>
-        <button type="submit" class="win-button" style="min-width: 40px; padding: 2px 6px;">Send</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Taskbar -->
-  <div class="win-taskbar">
-    <button id="start-button" class="win-start-button">
-      <svg viewBox="0 0 16 16" width="14" height="14" style="image-rendering: pixelated; flex-shrink: 0;" aria-hidden="true">
-        <rect x="0" y="0" width="7" height="7" fill="#FF0000" />
-        <rect x="9" y="0" width="7" height="7" fill="#00FF00" />
-        <rect x="0" y="9" width="7" height="7" fill="#0000FF" />
-        <rect x="9" y="9" width="7" height="7" fill="#FFFF00" />
-      </svg>
-      Start
-    </button>
-    <div class="win-taskbar-divider"></div>
-    <div style="flex: 1;"></div>
-    <div class="win-clock" style="text-align: right; line-height: 1.3;">
-      <div id="clock-time" style="font-size: 11px; font-weight: bold;">--:-- --</div>
-      <div id="clock-date" style="font-size: 9px;">--- --- --, ----</div>
-    </div>
-  </div>
-
-  <!-- Project Modal -->
-  <div id="modal-overlay" class="modal-overlay">
-    <div class="win-window" style="width: min(700px, 100%); max-height: 90vh; display: flex; flex-direction: column;" onclick="event.stopPropagation()">
-      <div class="win-titlebar">
-        <span id="modal-title">Project Title</span>
-        <button id="modal-close-btn" class="win-button" style="min-width: 16px; width: 16px; height: 14px; padding: 0; font-size: 10px; line-height: 10px;">x</button>
-      </div>
-      <div class="win-menubar">
-        <div class="win-menu-item"><u>F</u>ile</div>
-        <div class="win-menu-item"><u>E</u>dit</div>
-        <div class="win-menu-item"><u>V</u>iew</div>
-      </div>
-      <div style="flex: 1; overflow-y: auto; background: var(--win-white); padding: 16px;">
-        <div id="modal-type-badge" style="padding: 4px 12px; margin-bottom: 16px; font-size: 11px; font-weight: bold; display: inline-flex; gap: 12px; letter-spacing: 0.06em;">
-          <span>PROJECT TYPE</span>
-          <span id="modal-year" style="opacity: 0.7;">2024</span>
-        </div>
-        <div style="margin-bottom: 16px;">
-          <div style="font-size: 11px; font-weight: bold; margin-bottom: 8px;">Technologies:</div>
-          <div id="modal-techs" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
-        </div>
-        <div id="modal-images-container" style="margin-bottom: 16px; display: none;">
-          <div style="font-size: 11px; font-weight: bold; margin-bottom: 8px;">Screenshots:</div>
-          <div class="win-inset win-image-frame" data-win-image-frame style="position: relative; aspect-ratio: 16/9; background: var(--win-black); padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-            <img id="modal-image" data-win-loader src="" alt="" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain;" />
-            <div class="win-image-loader" role="status" aria-live="polite">
-              <div class="win-image-loader-window">
-                <div class="win-image-loader-titlebar">
-                  <span>Loading Image</span>
-                  <span>?</span>
-                </div>
-                <div class="win-image-loader-body">
-                  Please wait...
-                  <div class="win-progress win-progress--indeterminate" aria-hidden="true">
-                    <span class="win-progress-bar"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="modal-image-controls" style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px;">
-              <button id="modal-prev" class="win-button" style="padding: 4px 12px; font-size: 11px;">&lt; Prev</button>
-              <div id="modal-image-count" style="background: var(--win-gray); padding: 4px 12px; font-size: 11px; border: 2px solid; border-color: var(--win-3d-light) var(--win-3d-dark) var(--win-3d-dark) var(--win-3d-light);">1 / 1</div>
-              <button id="modal-next" class="win-button" style="padding: 4px 12px; font-size: 11px;">Next &gt;</button>
-            </div>
+      <h2 id="modal-title">Project title</h2>
+      <div id="modal-techs" class="tag-list"></div>
+      <div id="modal-images-container" class="modal-images" hidden>
+        <img id="modal-image" data-image-loader alt="" loading="lazy" decoding="async">
+        <div id="modal-image-controls" class="modal-image-controls media-slider">
+          <button id="modal-prev" class="media-slider-button" type="button" aria-label="Previous project image">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 5L8 12L15 19" />
+            </svg>
+          </button>
+          <div class="media-slider-track">
+            <input id="modal-image-slider" type="range" min="1" max="1" value="1" step="1" aria-label="Project image slider">
+            <span id="modal-image-count" class="media-slider-count">01 / 01</span>
           </div>
-        </div>
-        <div style="margin-bottom: 16px;">
-          <div style="font-size: 11px; font-weight: bold; margin-bottom: 8px;">Description:</div>
-          <div id="modal-description" class="win-inset" style="padding: 12px; font-size: 11px; line-height: 1.6;"></div>
-        </div>
-        <div id="modal-note-container" style="display: none; background: #FFFFCC; border: 1px solid #CCCC99; padding: 12px; font-size: 11px; line-height: 1.5;">
-          <strong>Note:</strong> <span id="modal-note"></span>
+          <button id="modal-next" class="media-slider-button" type="button" aria-label="Next project image">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 5L16 12L9 19" />
+            </svg>
+          </button>
         </div>
       </div>
-      <div class="win-statusbar">
-        <div id="modal-status-type" class="win-statusbar-field" style="font-size: 11px;">Type</div>
-        <div id="modal-status-tech-count" class="win-statusbar-field" style="flex: 0; min-width: 90px; font-size: 11px;">0 tech(s)</div>
+      <p id="modal-description"></p>
+      <span id="modal-proof-badge" class="project-proof-badge modal-proof-badge" hidden>
+        <span class="project-proof-icon" aria-hidden="true">&#9733;</span>
+        <span data-proof-label></span>
+      </span>
+      <p id="modal-note-container" class="modal-note" hidden><strong>Note:</strong> <span id="modal-note"></span></p>
+      <div class="modal-status">
+        <span id="modal-status-type">Type</span>
+        <span id="modal-status-tech-count">0 tech(s)</span>
       </div>
+    </article>
+  </div>
+
+  <div id="cv-viewer" class="cv-viewer" role="dialog" aria-modal="true" aria-labelledby="cv-viewer-title" aria-hidden="true">
+    <div class="cv-viewer-topline">
+      <span id="cv-viewer-title">Curriculum Vitae | Last updated: August 2026</span>
+      <div class="cv-viewer-actions">
+        <a href="/cv/curriculum-vitae.pdf" download="DUNGAO, GEINEL NIÑO A._CV LATEST AUGUST 2026.pdf">Download</a>
+        <button id="cv-close-button" type="button">Close</button>
+      </div>
+    </div>
+    <div class="cv-pdf-shell">
+      <iframe
+        id="cv-frame"
+        title="Geinel Ni&ntilde;o A. Dungao Curriculum Vitae"
+        data-src="/cv/curriculum-vitae.pdf#toolbar=0&amp;navpanes=0&amp;view=FitH"
+      ></iframe>
+    </div>
+  </div>
+
+  <div id="field-viewer" class="field-viewer" aria-hidden="true">
+    <div class="field-viewer-bar">
+      <span id="field-viewer-count">Active Record</span>
+      <button id="field-viewer-close" type="button">Close</button>
+    </div>
+    <img id="field-viewer-image" alt="" loading="lazy" decoding="async">
+    <div class="field-viewer-controls media-slider">
+      <button id="field-viewer-prev" class="field-viewer-nav media-slider-button" type="button" aria-label="Previous active record image">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5L8 12L15 19" />
+        </svg>
+      </button>
+      <div class="media-slider-track">
+        <input id="field-viewer-slider" type="range" min="1" max="1" value="1" step="1" aria-label="Active Record image slider">
+        <span id="field-viewer-progress-count" class="media-slider-count">01 / 01</span>
+      </div>
+      <button id="field-viewer-next" class="field-viewer-nav media-slider-button" type="button" aria-label="Next active record image">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 5L16 12L9 19" />
+        </svg>
+      </button>
     </div>
   </div>
 
