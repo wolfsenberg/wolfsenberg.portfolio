@@ -242,6 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.querySelector(".menu-toggle");
   const siteNav = document.getElementById("site-nav");
   const themeToggle = document.getElementById("theme-toggle");
+  const brandLink = document.querySelector(".brand");
 
   function getStoredTheme() {
     try {
@@ -331,6 +332,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const topReturn = document.querySelector(".top-return");
+  const homeLinks = [brandLink, topReturn].filter(Boolean);
+
+  function cleanHomeUrl() {
+    return `${window.location.pathname}${window.location.search}`;
+  }
+
+  if (window.location.hash === "#home") {
+    window.history.replaceState(null, "", cleanHomeUrl());
+  }
+
+  homeLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.history.pushState(null, "", cleanHomeUrl());
+    });
+  });
 
   if (topReturn) {
     let topReturnTicking = false;

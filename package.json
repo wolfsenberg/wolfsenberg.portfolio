@@ -7,7 +7,9 @@
     "start": "node server.js",
     "dev": "node server.js",
     "check": "node --check server.js",
-    "assets:webp": "node scripts/convert-assets-to-webp.js"
+    "assets:webp": "node scripts/convert-assets-to-webp.js",
+    "assets:social": "node scripts/generate-social-preview.js",
+    "assets:favicons": "node scripts/generate-favicons.js"
   },
   "dependencies": {
     "express": "^4.22.1",
