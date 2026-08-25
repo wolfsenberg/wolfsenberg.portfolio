@@ -260,10 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  }
-
   function applyTheme(theme, shouldPersist = false) {
     const nextTheme = theme === "dark" ? "dark" : "light";
     document.documentElement.dataset.theme = nextTheme;
@@ -279,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (shouldPersist) setStoredTheme(nextTheme);
   }
 
-  applyTheme(document.documentElement.dataset.theme || getStoredTheme() || getSystemTheme());
+  applyTheme(getStoredTheme() || document.documentElement.dataset.theme || "light");
 
   themeToggle?.addEventListener("click", () => {
     const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
