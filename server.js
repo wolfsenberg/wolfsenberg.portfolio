@@ -16,6 +16,7 @@ const cvRoutes = ["/cv/curriculum-vitae.pdf", "/cv/geinel-dungao-cv-2026.pdf"];
 const app = express();
 const port = process.env.PORT || 3005;
 const assetBaseUrl = (process.env.ASSET_BASE_URL || "/assets").replace(/\/$/, "");
+const siteUrl = (process.env.SITE_URL || process.env.PUBLIC_SITE_URL || "https://geinel-dungao.me").replace(/\/$/, "");
 const assetBucketName = process.env.ASSET_BUCKET_NAME || process.env.BUCKET_NAME || "";
 const isProduction = process.env.NODE_ENV === "production";
 const rateLimitEnabled = process.env.ENABLE_RATE_LIMIT === "true" || (isProduction && process.env.DISABLE_RATE_LIMIT !== "true");
@@ -91,6 +92,12 @@ app.get(cvRoutes, (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=86400");
   res.type("application/pdf");
   res.sendFile(cvFilePath);
+});
+
+app.get("/favicon.ico", (_req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=86400");
+  res.type("image/x-icon");
+  res.sendFile(path.join(publicDir, "assets", "favicons", "favicon.ico"));
 });
 
 function normalizeAssetPath(requestPath) {
@@ -240,6 +247,7 @@ app.get("/", async (_req, res, next) => {
       .send(
         html
           .replaceAll("__ASSET_BASE_URL__", assetBaseUrl)
+          .replaceAll("__SITE_URL__", siteUrl)
           .replaceAll("__CSP_NONCE__", res.locals.cspNonce)
       );
   } catch (error) {
