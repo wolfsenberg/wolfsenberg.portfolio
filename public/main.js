@@ -241,8 +241,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const menuToggle = document.querySelector(".menu-toggle");
   const siteNav = document.getElementById("site-nav");
+  const navLinks = siteNav ? Array.from(siteNav.querySelectorAll('a[href^="#"]')) : [];
   const themeToggle = document.getElementById("theme-toggle");
   const brandLink = document.querySelector(".brand");
+  let refreshIndexActiveState = () => {};
 
   function getStoredTheme() {
     try {
@@ -286,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     menuToggle.addEventListener("click", () => {
       const isOpen = siteNav.classList.toggle("open");
       menuToggle.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen) refreshIndexActiveState();
     });
 
     siteNav.querySelectorAll("a").forEach((link) => {
@@ -602,30 +605,39 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollSections.forEach((section) => {
         section.classList.toggle("section-active", section === activeSection);
       });
+
+      const activeHref = activeSection?.id ? `#${activeSection.id}` : "";
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute("href") === activeHref;
+        link.classList.toggle("is-active", isActive);
+
+        if (isActive) {
+          link.setAttribute("aria-current", "true");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
     };
 
     const updateScrollState = () => {
       scrollStateFrame = 0;
 
       const viewportHeight = window.innerHeight || 1;
-      const sectionReadingLine = viewportHeight * 0.46;
       const imageReadingLine = viewportHeight * 0.52;
       const imageFadeRange = Math.max(180, viewportHeight * 0.26);
       let nearestSection = scrollSections[0];
-      let nearestDistance = Number.POSITIVE_INFINITY;
+      const activeViewportLine = viewportHeight * 0.46;
+      const isAtPageEnd = window.scrollY + viewportHeight >= document.documentElement.scrollHeight - 4;
 
-      scrollSections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > viewportHeight) return;
-
-        const sectionCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(sectionCenter - sectionReadingLine);
-
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearestSection = section;
-        }
-      });
+      if (isAtPageEnd) {
+        nearestSection = scrollSections[scrollSections.length - 1];
+      } else {
+        scrollSections.forEach((section) => {
+          if (section.getBoundingClientRect().top <= activeViewportLine) {
+            nearestSection = section;
+          }
+        });
+      }
 
       if (nearestSection) setActiveSection(nearestSection);
 
@@ -650,6 +662,8 @@ document.addEventListener("DOMContentLoaded", () => {
         target.style.setProperty("--tone-contrast", contrast.toFixed(3));
       });
     };
+
+    refreshIndexActiveState = updateScrollState;
 
     const scheduleScrollStateUpdate = () => {
       if (scrollStateFrame) return;
