@@ -730,6 +730,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cvPreviousBodyStyle = null;
   let cvPreviousHtmlScrollBehavior = "";
   const cvReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const cvPageStackQuery = window.matchMedia("(max-width: 860px), (hover: none) and (pointer: coarse)");
 
   function lockCvScroll() {
     if (cvLocked) return;
@@ -790,7 +791,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.clearTimeout(cvUnlockTimer);
     cvLastFocused = document.activeElement;
-    if (cvFrame && !cvFrame.getAttribute("src")) cvFrame.src = cvFrame.dataset.src;
+    if (cvFrame && !cvPageStackQuery.matches && !cvFrame.getAttribute("src")) cvFrame.src = cvFrame.dataset.src;
 
     lockCvScroll();
     setCvPageInert(true);
