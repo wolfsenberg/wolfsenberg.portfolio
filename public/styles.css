@@ -422,7 +422,7 @@ html[data-theme="dark"] .theme-icon-sun {
 
 .hero {
   min-height: auto;
-  padding-top: 64px;
+  padding-top: 56px;
   align-items: start;
   border-top: 0;
 }
@@ -2660,7 +2660,7 @@ html[data-theme="dark"] .theme-icon-sun {
   }
 
   .hero {
-    padding-top: 42px;
+    padding-top: 34px;
   }
 
   .hero-index {
@@ -3558,7 +3558,7 @@ html[data-theme="dark"] .theme-icon-sun {
   }
 
   .hero {
-    padding-top: 34px;
+    padding-top: 26px;
   }
 
   .hero-index {
